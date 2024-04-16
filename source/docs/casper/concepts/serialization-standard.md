@@ -708,7 +708,7 @@ The hex-encoded address of a package associated with an [`AddressableEntity`](#a
 
 ## PackageStatus {#package-status}
 
-The lock status of the package, serialized as a [`boolean`](#boolean-clvalue-boolean) where `true` indicates a locked contract and `false` indicates an unlocked package.
+The lock status of the package, serialized as a [`boolean`](#boolean-clvalue-boolean) where `true` indicates a locked package and `false` indicates an unlocked package.
 
 ## Parameter {#parameter}
 
@@ -720,7 +720,7 @@ The pricing mode of a transaction, with two possible variants. It serializes as 
 
 | Tag | PricingMode| Description |
 | --- | ---------- | ----------- |
-| 0 | Classic | Original payment model, creator of a transaction specifies how much they will pay and at which gas price. |
+| 0 | Classic | The original payment model, in which the creator of a transaction specifies how much they will pay and at which gas price. |
 | 1 | Fixed | The cost of the transaction is determined by the cost table, per the transaction kind. |
 
 ### Classic {#pricingmode-classic}
@@ -811,7 +811,7 @@ The identifier of a `stored` transaction target, serialized as one of the follow
 
 ## TransactionRuntime {#transactionruntime}
 
-The runtime used to execute a transaction, serialized as a [`u8`](#numeric-clvalue-numeric) Currently, there is only the `VmCasperV1` available, which serializes as a `0`.
+The runtime used to execute a transaction, serialized as a [`u8`](#numeric-clvalue-numeric). Currently, only the `VmCasperV1` is available, which serializes as a `0`.
 
 ## TransactionSessionKind {#transactionsessionkind}
 
@@ -820,7 +820,7 @@ The session kind of a transaction, serialized as a `u8` tag as per the following
 | Tag | Kind | Description |
 | --- | ---- | ----------- |
 | 0 | Standard | A standard (non-special-case) session. This kind of session is not allowed to install or upgrade a stored contract, but can call stored contracts. |
-| 1 | Installer | A session which installs a stored contract |
+| 1 | Installer | A session which installs a stored contract. |
 | 2 | Upgrader | A session which upgrades a previously-installed stored contract. |
 | 3 | Isolated | A session which doesn't call any stored contracts. | 
 
@@ -830,9 +830,9 @@ The scheduling mode of a transaction, serialized as a [`u8`](#numeric-clvalue-nu
 
 - `Standard` serializes as a `0`.
 
-- `FutureEra` serializes as a `1` followed by a future [`era_id`](#eraid-eraid)
+- `FutureEra` serializes as a `1` followed by a future [`era_id`](#eraid-eraid).
 
-- `FutureTimestamp` serializes as a `2` followed by a future [`timestamp`](#timestamp-timestamp)
+- `FutureTimestamp` serializes as a `2` followed by a future [`timestamp`](#timestamp-timestamp).
 
 ## TransactionTarget {#transactiontarget}
 
@@ -865,8 +865,8 @@ The transaction hash is a digest over the contents of the transaction header. Th
 The header portion of a transaction, structurally, is defined as follows:
 
 -   `chain_name`: Chain name is a human-readable string describing the name of the chain as detailed in the chainspec. It is serialized as a [String](#string-clvalue-string).
--   `timestamp`: A timestamp is a struct that is a unary tuple containing a `u64` value. This value is a count of the milliseconds since the UNIX epoch. Thus the value `1603994401469` serializes as `0xbd3a847575010000`
--   `ttl`: The **Time to live** is defined as the amount of time for which transaction is considered valid. The `ttl` serializes in the same manner as the timestamp.
+-   `timestamp`: A timestamp is a struct that is a unary tuple containing a `u64` value. This value is a count of the milliseconds since the UNIX epoch. Thus the value `1603994401469` serializes as `0xbd3a847575010000`.
+-   `ttl`: The **Time to live** is defined as the amount of time for which the transaction is considered valid. The `ttl` serializes in the same manner as the timestamp.
 -   `body_hash`: Body hash is a hash over the contents of the [transaction body](#transactionv1body). It serializes as the byte representation of the hash itself.
 -   [`pricing_mode`](#pricingmode-pricingmode)
 -   [`initator_addr`](#initiatoraddr-initiatoraddr)
@@ -892,7 +892,7 @@ The actual transformation performed while executing a deploy. It serializes as a
 |----------------------|---------------|------------------------------------------------------------------------------|
 |Identity              | 0             | A transform having no effect.                                                |
 |Write_CLValue         | 1             | Writes the given [`CLValue`](#clvalue-calvalue) to global state.             |
-|Write_Account         | 2             | Write the given [`Account`](#account-hash) to global state.                  |
+|Write_Account         | 2             | Writes the given [`Account`](#account-hash) to global state.                  |
 |Write_Contract_WASM   | 3             | Writes a smart [contract as Wasm](#contractwasmhash) to global state.        |
 |Write_Contract        | 4             | Writes a smart [contract](#contracthash) to global state.                    | 
 |Write_Contract_Package| 5             | Writes a smart [contract package](#contractpackagehash) to global state.     |
