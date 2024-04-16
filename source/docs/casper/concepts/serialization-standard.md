@@ -12,7 +12,7 @@ An Account is a structure that represents a user on a Casper network. The accoun
 
 -   [`named_keys`](#namedkey)
 
--   `main_purse` The account's main purse `URef`. You may find information on `URef` serialization [here](#clvalue-uref).
+-   `main_purse`: The account's main purse `URef`. You may find information on `URef` serialization [here](#clvalue-uref).
 
 -   [`associated_keys`](#associated-keys)
 
@@ -26,27 +26,27 @@ A `blake2b` hash of the public key, representing the address of a user's account
 
 Identifier for possible ways to retrieve an Account. It can consist of any of the following in most situations:
 
-- [`PublicKey`](#publickey) The account's public key.
+- [`PublicKey`](#publickey): The account's public key.
 
-- [`AccountHash`](#account-hash) The `blake2b` hash of the account's public key.
+- [`AccountHash`](#account-hash): The `blake2b` hash of the account's public key.
 
 ## Action Thresholds {#action-thresholds}
 
 The minimum weight thresholds that have to be met when executing an action of a certain type. It serializes as three consecutive [`u8` values](#clvalue-numeric) as follows.
 
--   `deployment` The minimum weight threshold required to perform deployment actions as a `u8` value.
+-   `deployment`: The minimum weight threshold required to perform deployment actions as a `u8` value.
 
--   `upgrade_management` The minimum weight threshold required to perform upgrade management actions as a `u8` value.
+-   `upgrade_management`: The minimum weight threshold required to perform upgrade management actions as a `u8` value.
 
--   `key_management` The minimum weight threshold required to perform key management actions as a `u8` value.
+-   `key_management`: The minimum weight threshold required to perform key management actions as a `u8` value.
 
 ## Activation Point {#activation-point}
 
 The first era to which the associated protocol version applies. It serializes as a single [`u8`](#clvalue-numeric) tag indicating if the era in question is genesis. If it is the genesis era, the following bytes will be a `timestamp`. If not, the bytes represent an `era_id`.
 
--   `era_id` An [Era ID newtype](#eraid) identifying the era when the protocol version will activate.
+-   `era_id`: An [Era ID newtype](#eraid) identifying the era when the protocol version will activate.
 
--   `timestamp` A [timestamp](#timestamp) if the activation point is of the Genesis variant.
+-   `timestamp`: A [timestamp](#timestamp) if the activation point is of the Genesis variant.
 
 ## AddressableEntity {#addressable-entity}
 
@@ -60,7 +60,7 @@ An Addressable Entity is a structure that represents an entity on a Casper netwo
 
 - [`protocol_version`](#protocolversion)
 
-- `main_purse` The entity's main purse `URef`. You may find information on `URef` serialization [here](#clvalue-uref).
+- `main_purse`: The entity's main purse `URef`. You may find information on `URef` serialization [here](#clvalue-uref).
 
 - [`associated_keys`](#associatedkey)
 
@@ -78,43 +78,43 @@ The hex-encoded address of an addressable entity, which serializes as the byte r
 
 A struct containing a signature and the public key of the signer.
 
--   `signature` The approval signature, which serializes as the byte representation of the [`Signature`](#signature). The first byte within the signature is 1 in the case of an `Ed25519` signature or 2 in the case of `Secp256k1`.
+-   `signature`: The approval signature, which serializes as the byte representation of the [`Signature`](#signature). The first byte within the signature is 1 in the case of an `Ed25519` signature or 2 in the case of `Secp256k1`.
 
--   `signer` The public key of the approvals signer. It serializes to the byte representation of the [`PublicKey`](#clvalue-publickey). If the `PublicKey` is an `Ed25519` key, then the first byte within the serialized buffer is 1 followed by the bytes of the key itself; else, in the case of `Secp256k1`, the first byte is 2.
+-   `signer`: The public key of the approvals signer. It serializes to the byte representation of the [`PublicKey`](#clvalue-publickey). If the `PublicKey` is an `Ed25519` key, then the first byte within the serialized buffer is 1 followed by the bytes of the key itself; else, in the case of `Secp256k1`, the first byte is 2.
 
 ## AssociatedKey {#associatedkey}
 
 A key granted limited permissions to an Account, for purposes such as multisig. It is serialized as a `BTreeMap` where the first 4 bytes represent a `u32` value describing the number of keys and weights held within. The remainder consists of a repeating pattern of serialized named keys and then weights of the length dictated by the first four bytes.
 
--   `account_hash` The [account hash](#account-hash) of the associated key.
+-   `account_hash`: The [account hash](#account-hash) of the associated key.
 
--   `weight` The weight of an associated key. The weight serializes as a [`u8` value](#clvalue-numeric).
+-   `weight`: The weight of an associated key. The weight serializes as a [`u8` value](#clvalue-numeric).
 
 ## AvailableBlockRange {#availableblockrange}
 
 An unbroken, inclusive range of blocks. It serializes as two consecutive [`u64` values](#clvalue-numeric) containing the following two fields:
 
--   `low` The inclusive lower bound of the range.
+-   `low`: The inclusive lower bound of the range.
 
--   `high` - The inclusive upper bound of the range.
+-   `high`: - The inclusive upper bound of the range.
 
 ## Bid {#bid}
 
 An entry in the validator map. The structure consists of the following fields:
 
--   `validator_public_key` The validator's public key. It serializes as a [`PublicKey`](#clvalue-publickey).
+-   `validator_public_key`: The validator's public key. It serializes as a [`PublicKey`](#clvalue-publickey).
 
--   `bonding_purse` The purse used for bonding. It serializes as a [`Uref`](#clvalue-uref).
+-   `bonding_purse`: The purse used for bonding. It serializes as a [`Uref`](#clvalue-uref).
 
--   `staked_amount` The amount of tokens staked by a validator (not including delegators). It serializes as a [`U512` value](#clvalue-numeric).
+-   `staked_amount`: The amount of tokens staked by a validator (not including delegators). It serializes as a [`U512` value](#clvalue-numeric).
 
--   `delegation_rate` The delegation rate of the bid. It serializes as an `i32` signed 32-bit integer primitive.
+-   `delegation_rate`: The delegation rate of the bid. It serializes as an `i32` signed 32-bit integer primitive.
 
--   `vesting_schedule` The vesting schedule for a genesis validator. `None` if it is a non-genesis validator. It serializes as an [`Option`](#clvalue-option).
+-   `vesting_schedule`: The vesting schedule for a genesis validator. `None` if it is a non-genesis validator. It serializes as an [`Option`](#clvalue-option).
 
--   `delegators` The validator's delegators, indexed by their public keys. They are serialized as a `BTreeMap` where the first 4 bytes represent a `u32` value describing the number of `PublicKey`s and delegators held within. The remainder consists of a repeating pattern of serialized `PublicKey`s and then delegators of the length dictated by the first four bytes.
+-   `delegators`: The validator's delegators, indexed by their public keys. They are serialized as a `BTreeMap` where the first 4 bytes represent a `u32` value describing the number of `PublicKey`s and delegators held within. The remainder consists of a repeating pattern of serialized `PublicKey`s and then delegators of the length dictated by the first four bytes.
 
--   `inactive` If the validator has been evicted. A [boolean](#clvalue-boolean) value that serializes as a single byte; `true` maps to `1`, while `false` maps to `0`.
+-   `inactive`: If the validator has been evicted. A [boolean](#clvalue-boolean) value that serializes as a single byte; `true` maps to `1`, while `false` maps to `0`.
 
 ## BidKind {#bid-kind}
 
@@ -145,9 +145,9 @@ A block is structurally defined as follows:
 
 Further, a block may consist of one of the following types:
 
-- `Version1` A legacy block created prior to the Condor upgrade.
+- `Version1`: A legacy block created prior to the Condor upgrade.
 
-- `Version2` A modern block.
+- `Version2`: A modern block.
 
 ### Block hash {#block-hash}
 
@@ -157,16 +157,16 @@ The block hash is a `Digest` over the contents of the block Header. The `BlockHa
 
 The header portion of a block, structurally, is defined as follows:
 
--   `parent_hash`: is the hash of the parent block. It serializes to the byte representation of the parent hash. The serialized buffer of the `parent_hash` is 32 bytes long.
--   `state_root_hash`: is the global state root hash produced by executing this block's body. It serializes to the byte representation of the `state root hash`. The serialized buffer of the `state_root_hash` is 32 bytes long.
--   `body_hash`: the hash of the block body. It serializes to the byte representation of the body hash. The serialized buffer of the `body_hash` is 32 bytes long.
--   `random_bit`: is a boolean needed for initializing a future era. It is serialized as a single byte; true maps to 1, while false maps to 0.
--   `accumulated_seed`: A seed needed for initializing a future era. It serializes to the byte representation of the parent Hash. The serialized buffer of the `accumulated_hash` is 32 bytes long.
--   `era_end`: contains equivocation and reward information to be included in the terminal finalized block. It is an optional field. Thus if the field is set as `None`, it serializes to _0_. The serialization of the other case is described in the EraEnd.
--   `timestamp`: The timestamp from when the block was proposed. It serializes as a single `u64` value. The serialization of a `u64` value is described in the CLValues section.
--   `era_id`: Era ID in which this block was created. It serializes as a single `u64` value.
--   `height`: The height of this block, i.e., the number of ancestors. It serializes as a single `u64` value.
--   `protocol_version`: The version of the Casper network when this block was proposed. It is 3-element tuple containing `u32` values. It serializes as a buffer containing the three `u32` serialized values. Refer to the CLValues section on how `u32` values are serialized.
+-   `parent_hash` is the hash of the parent block. It serializes to the byte representation of the parent hash. The serialized buffer of the `parent_hash` is 32 bytes long.
+-   `state_root_hash` is the global state root hash produced by executing this block's body. It serializes to the byte representation of the `state root hash`. The serialized buffer of the `state_root_hash` is 32 bytes long.
+-   `body_hash` the hash of the block body. It serializes to the byte representation of the body hash. The serialized buffer of the `body_hash` is 32 bytes long.
+-   `random_bit` is a boolean needed for initializing a future era. It is serialized as a single byte; true maps to 1, while false maps to 0.
+-   `accumulated_seed` is a seed needed for initializing a future era. It serializes to the byte representation of the parent Hash. The serialized buffer of the `accumulated_hash` is 32 bytes long.
+-   `era_end` contains equivocation and reward information to be included in the terminal finalized block. It is an optional field. Thus if the field is set as `None`, it serializes to _0_. The serialization of the other case is described in the EraEnd.
+-   `timestamp` The timestamp from when the block was proposed. It serializes as a single `u64` value. The serialization of a `u64` value is described in the CLValues section.
+-   `era_id` Era ID in which this block was created. It serializes as a single `u64` value.
+-   `height` The height of this block, i.e., the number of ancestors. It serializes as a single `u64` value.
+-   `protocol_version` The version of the Casper network when this block was proposed. It is 3-element tuple containing `u32` values. It serializes as a buffer containing the three `u32` serialized values. Refer to the CLValues section on how `u32` values are serialized.
 
 Both `BlockHeaderV1` and `BlockHeaderV2` serialize in the same way.
 
@@ -195,10 +195,10 @@ Note that `EraEndV1` is an optional field. Thus the above scheme only applies if
 
 `EraEndV1` as represented within the block header, is a struct containing four fields.
 
-- `equivocators` A vector of `PublicKey` listing equivocators for the era.
-- `inactive_validators` A list of inactive validators for the era.
-- `next_era_validator_weights` A map of validators and their weights for the era to follow.
-- `rewards` A Binary Tree Map of `PublicKey` and `u64`.
+- `equivocators`: A vector of `PublicKey` listing equivocators for the era.
+- `inactive_validators`: A list of inactive validators for the era.
+- `next_era_validator_weights`: A map of validators and their weights for the era to follow.
+- `rewards`: A Binary Tree Map of `PublicKey` and `u64`.
 
 Note that `EraEndV2` is an optional field. Thus the above scheme only applies if there is an `EraEndV2`; if there is no era end, the field simply serializes to _0_.
 
@@ -212,44 +212,44 @@ The body portion of a block, prior to the Condor upgrade, is structurally define
 
 When we serialize the `BlockBodyV1`, we create a buffer that contains the serialized representations of the individual fields present within the block.
 
--   `proposer`: serializes to the byte representation of the `PublicKey`. If the `PublicKey` is an `Ed25519` key, then the first byte within the serialized buffer is 1 followed by the bytes of the key itself; else, in the case of `Secp256k1`, the first byte is 2.
--   `deploy_hashes`: serializes to the byte representation of all the deploy_hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
--   `transfer_hashes`: serializes to the byte representation of all the deploy_hashes within the block header. Its length is `32 * n`, where n denotes the number of transfers present within the body.
+-   `proposer` serializes to the byte representation of the `PublicKey`. If the `PublicKey` is an `Ed25519` key, then the first byte within the serialized buffer is 1 followed by the bytes of the key itself; else, in the case of `Secp256k1`, the first byte is 2.
+-   `deploy_hashes` serializes to the byte representation of all the deploy_hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
+-   `transfer_hashes` serializes to the byte representation of all the deploy_hashes within the block header. Its length is `32 * n`, where n denotes the number of transfers present within the body.
 
 ### BlockBodyV2 {#blockbodyv2}
 
 A modern block is structurally defined as:
 
-- [`proposer`](#publickey) The public key of the proposing node.
+- [`proposer`](#publickey): The public key of the proposing node.
 
-- [`mint`](#transaction-hash) A vector of hashes of the mint transactions within the block.
+- [`mint`](#transaction-hash): A vector of hashes of the mint transactions within the block.
 
-- [`auction`](#transaction-hash) A vector of hashes of the auction transactions within the block.
+- [`auction`](#transaction-hash): A vector of hashes of the auction transactions within the block.
 
-- [`install_upgrade`](#transaction-hash) A vector of the hashes of the installer/upgrader transactions within the block.
+- [`install_upgrade`](#transaction-hash): A vector of the hashes of the installer/upgrader transactions within the block.
 
-- [`standard`](#transaction-hash) A vector of hashes of all other transactions within the block.
+- [`standard`](#transaction-hash): A vector of hashes of all other transactions within the block.
 
-- [`rewarded_signatures`](#rewarded-signatures) A list of identifiers for finality signatures for a particular past block.
+- [`rewarded_signatures`](#rewarded-signatures): A list of identifiers for finality signatures for a particular past block.
 
 When we serialize the `BlockBodyV2`, we create a buffer that contains the serialized representations of the individual fields present within the block.
 
-- `proposer`: serializes to the byte representation of the `PublicKey` of the proposer.
-- `mint`: serializes as the byte representation of all the mint transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
-- `auction`: serializes as the byte representation of all the auction transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
-- `install_upgrade`: serializes as the byte representation of all the installer/upgrader transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
-- `standard`: serializes as the byte representation of all other transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
+- `proposer` serializes to the byte representation of the `PublicKey` of the proposer.
+- `mint` serializes as the byte representation of all the mint transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
+- `auction` serializes as the byte representation of all the auction transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
+- `install_upgrade` serializes as the byte representation of all the installer/upgrader transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
+- `standard` serializes as the byte representation of all other transaction hashes within the block header. Its length is `32 * n`, where n denotes the number of deploy hashes present within the body.
 - `rewarded_signatures` serializes as a vector of `SingleBlockRewardedSignatures` which describes signatures for a single ancestor block. The first entry represents the signatures for the parent block, the second for the parent of the parent, and so on.
 
 ## BlockIdentifier {#blockidentifier}
 
 Identifier for possible ways to retrieve a Block. It can consist of any of the following in most situations:
 
--   [`hash`](#block-hash) Identify and retrieve a Block with its hash. The `BlockHash` serializes as the byte representation of the hash itself.
+-   [`hash`](#block-hash): Identify and retrieve a Block with its hash. The `BlockHash` serializes as the byte representation of the hash itself.
 
--   `height` Identify and retrieve the Block with its height. Height serializes as a single `u64` value.
+-   `height`: Identify and retrieve the Block with its height. Height serializes as a single `u64` value.
 
--   `state_root_hash` Identify and retrieve the Block with its state root hash. It serializes to the byte representation of the `state root hash`. The serialized buffer of the `state_root_hash` is 32 bytes long.
+-   `state_root_hash`: Identify and retrieve the Block with its state root hash. It serializes to the byte representation of the `state root hash`. The serialized buffer of the `state_root_hash` is 32 bytes long.
 
 ## BlockSyncStatus {#blocksyncstatus}
 
@@ -311,11 +311,11 @@ The lock status of the contract package, serialized as a [`boolean`](#boolean-cl
 
 The version of the contract.
 
--   [`contract_hash`](#contracthash) The contract hash of the contract.
+-   [`contract_hash`](#contracthash): The contract hash of the contract.
 
--   `contract_version` The version of the contract within the protocol major version. It serializes as a [`u32` value](#clvalue-numeric).
+-   `contract_version`: The version of the contract within the protocol major version. It serializes as a [`u32` value](#clvalue-numeric).
 
--   `protocol_version_major` The major element of the protocol version this contract is compatible with. It serializes as a [`u32` value](#clvalue-numeric).
+-   `protocol_version_major`: The major element of the protocol version this contract is compatible with. It serializes as a [`u32` value](#clvalue-numeric).
 
 ## ContractVersionKey {#contractversionkey}
 
@@ -329,15 +329,15 @@ A `blake2b` hash of a contract's Wasm. The contract's Wasm hash serializes as a 
 
 Represents a party delegating their stake to a validator (or "delegatee"). The structure consists of the following fields:
 
--   `delegator_public_key` The public key of the delegator, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `delegator_public_key`: The public key of the delegator, serialized as a [`PublicKey`](#clvalue-publickey).
 
--   `staked_amount` The amount staked by the delegator, serialized as a [`U512` value](#clvalue-numeric).
+-   `staked_amount`: The amount staked by the delegator, serialized as a [`U512` value](#clvalue-numeric).
 
--   `bonding_purse` The bonding purse associated with the delegation. It serializes as a [`URef` value](#clvalue-uref).
+-   `bonding_purse`: The bonding purse associated with the delegation. It serializes as a [`URef` value](#clvalue-uref).
 
--   `validator_public_key` The public key of the validator that the delegator will be delegating to, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `validator_public_key`: The public key of the validator that the delegator will be delegating to, serialized as a [`PublicKey`](#clvalue-publickey).
 
--   `vesting_schedule` The vesting schedule for the provided delegator bid. `None` if it is a non-genesis validator. It serializes as an [`Option`](#clvalue-option).
+-   `vesting_schedule`: The vesting schedule for the provided delegator bid. `None` if it is a non-genesis validator. It serializes as an [`Option`](#clvalue-option).
 
 ## Deploy {#serialization-standard-deploy}
 
@@ -405,15 +405,15 @@ Approval contains two fields:
 
 Information relating to a given deploy. The structure consists of the following fields:
 
--   `deploy_hash` The hash of the relevant deploy, serialized as a byte representation of the hash itself.
+-   `deploy_hash`: The hash of the relevant deploy, serialized as a byte representation of the hash itself.
 
--   `transfers` Transfers performed by the deploy, serialized as a [`List`](#clvalue-list).
+-   `transfers`: Transfers performed by the deploy, serialized as a [`List`](#clvalue-list).
 
--   `from` The account identifier of the creator of the deploy, serialized as an [`account_hash`](#account-hash).
+-   `from`: The account identifier of the creator of the deploy, serialized as an [`account_hash`](#account-hash).
 
--   `source` The source purse used for payment of the deploy, serialized as a [`URef`](#clvalue-uref).
+-   `source`: The source purse used for payment of the deploy, serialized as a [`URef`](#clvalue-uref).
 
--   `gas` The gas cost of executing the deploy, serialized as a [`U512`](#clvalue-numeric).
+-   `gas`: The gas cost of executing the deploy, serialized as a [`U512`](#clvalue-numeric).
 
 ## Digest {#digest}
 
@@ -423,9 +423,9 @@ A `blake2b` hash digest. The digest serializes as a byte representation of the h
 
 Disabled contract versions, containing the following:
 
--   `contract_version` The version of the contract within the protocol major version. It serializes as a [`u32` value](#clvalue-numeric).
+-   `contract_version`: The version of the contract within the protocol major version. It serializes as a [`u32` value](#clvalue-numeric).
 
--   `protocol_version_major` The major element of the protocol version this contract is compatible with. It serializes as a [`u32` value](#clvalue-numeric).
+-   `protocol_version_major`: The major element of the protocol version this contract is compatible with. It serializes as a [`u32` value](#clvalue-numeric).
 
 ## Effects {#effects}
 
@@ -439,15 +439,15 @@ The major element of `ProtocolVersion` combined with `EntityVersion` serialized 
 
 A type of signature method. Order of arguments matters, since this can be referenced by index as well as name.
 
--   `name` The name of the entry point, serialized as a [`String`](#clvalue-string).
+-   `name`: The name of the entry point, serialized as a [`String`](#clvalue-string).
 
--   `args` Arguments for this method. They serialize as a list of the [`Parameter`](#parameter)s, where each parameter represents an argument passed to the entrypoint.
+-   `args`: Arguments for this method. They serialize as a list of the [`Parameter`](#parameter)s, where each parameter represents an argument passed to the entrypoint.
 
--   `ret` The return type of the method, serialized as a [`Unit`](#clvalue-unit).
+-   `ret`: The return type of the method, serialized as a [`Unit`](#clvalue-unit).
 
--   `access` An enum describing the possible access control options for a contract entry point. It serializes as a 1 for public or a 1 followed by a [`List`](#clvalue-list) of authorized users.
+-   `access`: An enum describing the possible access control options for a contract entry point. It serializes as a 1 for public or a 1 followed by a [`List`](#clvalue-list) of authorized users.
 
--   `entry_point_type` Identifies the type of entry point. It serializes as a `0` for Session and a `1` for Contract.
+-   `entry_point_type`: Identifies the type of entry point. It serializes as a `0` for Session and a `1` for Contract.
 
 ## EntryPoints {#entrypoint}
 
@@ -465,9 +465,9 @@ Auction metadata, intended to be recorded each era. It serializes as a [`List`](
 
 The journal of execution transforms from a single deploy.
 
--   `operations` The resulting operations, serialized as a [`List`](#clvalue-list) of [operations](#operation).
+-   `operations`: The resulting operations, serialized as a [`List`](#clvalue-list) of [operations](#operation).
 
--   `transforms` The actual [transformation](#transform) performed while executing a deploy.
+-   `transforms`: The actual [transformation](#transform) performed while executing a deploy.
 
 ## ExecutionResultV1 {#executionresultv1}
 
@@ -477,23 +477,23 @@ The result of a single deploy. It serializes as a `u8` tag indicating either `Fa
 
 The result of a failed execution.
 
--   `effect` The [effect](#executioneffect) of executing the deploy.
+-   `effect`: The [effect](#executioneffect) of executing the deploy.
 
--   `transfers` A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
+-   `transfers`: A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
 
--   `cost` The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
+-   `cost`: The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
 
--   `error_message` The error message associated with executing the deploy, serialized as a [`String`](#clvalue-string).
+-   `error_message`: The error message associated with executing the deploy, serialized as a [`String`](#clvalue-string).
 
 ### `Success`
 
 The result of a successful execution.
 
--   `effect` The [effect](#executioneffect) of executing the deploy.
+-   `effect`: The [effect](#executioneffect) of executing the deploy.
 
--   `transfers` A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
+-   `transfers`: A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
 
--   `cost` The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
+-   `cost`: The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
 
 ## ExecutionResultV2 {#executionresultv2}
 
@@ -503,23 +503,23 @@ The result of a single deploy. It serializes as a `u8` tag indicating either `Fa
 
 The result of a failed execution.
 
--   `effects` The [effect](#effects) of executing the deploy.
+-   `effects`: The [effect](#effects) of executing the deploy.
 
--   `transfers` A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
+-   `transfers`: A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
 
--   `cost` The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
+-   `cost`: The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
 
--   `error_message` The error message associated with executing the deploy, serialized as a [`String`](#clvalue-string).
+-   `error_message`: The error message associated with executing the deploy, serialized as a [`String`](#clvalue-string).
 
 ### `Success`
 
 The result of a successful execution.
 
--   `effects` The [effects](#effects) of executing the deploy.
+-   `effects`: The [effects](#effects) of executing the deploy.
 
--   `transfers` A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
+-   `transfers`: A record of transfers performed while executing the deploy, serialized as a [`List`](#clvalue-list).
 
--   `cost` The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
+-   `cost`: The cost of executing the deploy, serializes as a [`U512`](#clvalue-numeric) value.
 
 ## Group {#group}
 
@@ -667,9 +667,9 @@ Named arguments to a contract. It is serialized by the combination of a [`String
 
 A mapping of string identifiers to a Casper `Key` type. It is serialized as a `BTreeMap` where the first 4 bytes represent a `u32` value describing the number of named keys and values held within. The remainder consists of a repeating pattern of serialized named keys and then values of the length dictated by the first four bytes.
 
--   `name` The name of the entry. It serializes as a [`string`](#clvalue-string).
+-   `name`: The name of the entry. It serializes as a [`string`](#clvalue-string).
 
--   `key` The value of the entry, which is a Casper `Key` type.
+-   `key`: The value of the entry, which is a Casper `Key` type.
 
 The named keys portion of the account structure serializes as a mapping of a string to Casper `Key` values as described [here](#serialization-standard-serialization-key).
 
@@ -677,9 +677,9 @@ The named keys portion of the account structure serializes as a mapping of a str
 
 An operation performed while executing a deploy. It contains:
 
--   `key` The formatted string of the key, serialized as a [`String`](#clvalue-string).
+-   `key`: The formatted string of the key, serialized as a [`String`](#clvalue-string).
 
--   `kind` OpKind, The type of operation performed. It serializes as a single byte based on the following table:
+-   `kind`: OpKind, The type of operation performed. It serializes as a single byte based on the following table:
 
 |OpKind|Serialization|
 |------|-------------|
@@ -694,7 +694,7 @@ A structure defining an entity, metadata and security container. The structure c
 
 - [`access_key`](#uref-clvalue-uref)
 
-- `versions` An array of entity versions associated with given hashes.
+- `versions`: An array of entity versions associated with given hashes.
 
 - [`disabled_versions`](#entityversionkey-entityversionkey)
 
@@ -854,7 +854,7 @@ A unit of work sent by a client to the network, which when executed can cause gl
 
 - [`TransactionV1Body`](#transactionv1body)
 
-- `approvals` A list of signatures.
+- `approvals`: A list of signatures.
 
 ### TransactionV1Hash {#transactionv1hash}
 
@@ -942,33 +942,33 @@ A struct representing an executed transformation serialized as a [`String`](#str
 
 A purse used for unbonding. The structure consists of the following:
 
--   `bonding_purse` The bonding purse, serialized as a [`URef`](#clvalue-uref).
+-   `bonding_purse`: The bonding purse, serialized as a [`URef`](#clvalue-uref).
 
--   `validator_public_key` The public key of the validator, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `validator_public_key`: The public key of the validator, serialized as a [`PublicKey`](#clvalue-publickey).
 
--   `unbonder_public_key` The public key of the unbonder, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `unbonder_public_key`: The public key of the unbonder, serialized as a [`PublicKey`](#clvalue-publickey).
 
--   `era_of_creation` Era in which this unbonding request was created, as an [`EraId`](#eraid) newtype, which serializes as a [`u64`](#clvalue-numeric) value.
+-   `era_of_creation`: Era in which this unbonding request was created, as an [`EraId`](#eraid) newtype, which serializes as a [`u64`](#clvalue-numeric) value.
 
--   `amount` The unbonding amount, serialized as a [`U512`](#clvalue-numeric) value.
+-   `amount`: The unbonding amount, serialized as a [`U512`](#clvalue-numeric) value.
 
--   `new_validator` The validator public key to redelegate to, serialized as an [`Option`](#clvalue-option) containing the public key.
+-   `new_validator`: The validator public key to redelegate to, serialized as an [`Option`](#clvalue-option) containing the public key.
 
 ## ValidatorBid {#validatorbid}
 
 An entry in the validator map. The structure consists of the following fields:
 
--   `validator_public_key` The public key of the validator that the delegator will be delegating to, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `validator_public_key`: The public key of the validator that the delegator will be delegating to, serialized as a [`PublicKey`](#clvalue-publickey).
 
--   `bonding_purse` The bonding purse associated with the delegation. It serializes as a [`URef` value](#clvalue-uref).
+-   `bonding_purse`: The bonding purse associated with the delegation. It serializes as a [`URef` value](#clvalue-uref).
 
--   `staked_amount` The amount staked by the delegator, serialized as a [`U512` value](#clvalue-numeric).
+-   `staked_amount`: The amount staked by the delegator, serialized as a [`U512` value](#clvalue-numeric).
 
--   `delegation_rate` The delegation rate serialized as a [`u8` value](#numeric-clvalue-numeric).
+-   `delegation_rate`: The delegation rate serialized as a [`u8` value](#numeric-clvalue-numeric).
 
--   `vesting_schedule` The vesting schedule for the provided delegator bid. `None` if it is a non-genesis validator. It serializes as an [`Option`](#clvalue-option).
+-   `vesting_schedule`: The vesting schedule for the provided delegator bid. `None` if it is a non-genesis validator. It serializes as an [`Option`](#clvalue-option).
 
--   `inactive` The validator's inactivity status, serialized as a [`boolean`](#boolean-clvalue-boolean).
+-   `inactive`: The validator's inactivity status, serialized as a [`boolean`](#boolean-clvalue-boolean).
 
 ## Values {#serialization-standard-values}
 
@@ -1187,11 +1187,11 @@ Each contract specifies the Casper protocol version that was active when the con
 
 A purse used for unbonding, replaced in 1.5 by [UnbondingPurse](#unbondingpurse). WithdrawPurses prior to 1.5 were known as UnbondingPurses and now consist of historical data.
 
--   `bonding_purse` The bonding purse, serialized as a [`URef`](#clvalue-uref).
+-   `bonding_purse`: The bonding purse, serialized as a [`URef`](#clvalue-uref).
 
--   `validator_public_key` The public key of the validator, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `validator_public_key`: The public key of the validator, serialized as a [`PublicKey`](#clvalue-publickey).
 
--   `unbonder_public_key` The public key of the unbonder, serialized as a [`PublicKey`](#clvalue-publickey).
+-   `unbonder_public_key`: The public key of the unbonder, serialized as a [`PublicKey`](#clvalue-publickey).
 
 -   `era_of_creation` Era in which this unbonding request was created, as an [`EraId`](#eraid) newtype, which serializes as a [`u64`](#clvalue-numeric) value.
 
