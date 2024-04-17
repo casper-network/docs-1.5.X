@@ -4,50 +4,47 @@ title: Highway Consensus
 
 # The Highway Consensus Protocol
 
-## What is Consensus?
+The [Highway](https://arxiv.org/pdf/2101.02159.pdf) consensus protocol was used on the Casper Mainnet until the [Zug](./zug.md) consensus protocol was introduced in version 2.0 of the Casper node software. Consensus in Casper is described in more detail [here](./consensus.md). This page describes the Highway consensus protocol at a high level. Private networks can choose between Zug and Highway, depending on their needs.
 
-Consensus is the backbone of any distributed network. The decentralized nature of a blockchain requires a method through which disparate entities can agree on one immutable truth. This involves determining the validity of transactions, resolving conflicts, and finalizing blocks to be added to the chain by the network. A consensus protocol is a set of mechanisms and rules within the distributed network with which all actors must comply.
+<!-- TODO confirm that we can use Casper-specific terms in these descriptions, even though Highway is a more general algorithm. For example, a value is a block. I understand that the value is a list of deploys, and a block has other calculated values, but this simplification makes the explanations easier. -->
 
-These rules outline the type of messages sent over the network, when they are sent and how to process them. Within the context of a blockchain, the consensus protocol decides which blocks are added to the chain by the network and the order in which they are added. This determines the state of the distributed ledger and ensures that all nodes agree on that state.
+## Unit Broadcasting
 
-The consensus mechanism will determine how a blockchain meets the following requirements:
+In Highway, nodes communicate by broadcasting units. A unit is a structure containing the following:
+- Citations of other units (at most one per node), subject to validity conditions
+- An optional proposed list of deploys to be included in a block. Note that the list can be empty
+- The unit's creator and its digital signature
+- Additional metadata, including a timestamp, sequence number, round length, etc.
 
-*   **Safety** - All honest nodes eventually agree on the final value. The system is setup in a way where no two honest nodes will report two different blocks at the same height of the blockchain.
+An empty unit still carries an implicit vote. The citations determine which block a unit votes for based on a rule called "the fork choice rule". If there are multiple blocks to vote on and there isn't clarity about which block is the latest, the algorithm calculates the latest block based on the citations. The algorithm counts the weight of units from other validators and what they vote on and chooses the latest block on the branch with the most weight. The proposal unit always votes on itself. The protocol implicitly prefers the proposed block due to the GHOST (Greedy Heaviest Observed Sub-Tree) rule. More details are found in the implementation under the fork choice rule. In summary, if there is a fork, every unit votes on some branch of the chain.
 
-*   **Liveness** - The system continues running and adds new blocks to the chain indefinitely.
+Over time, the units form a Directed Acyclic Graph (DAG), where units are the vertices and citations are the edges.
 
-## What is Highway Consensus?
+<!-- TODO Include a higher res diagram here. -->
+<p align="center">
+<img src={"/image/design/highway-dag.png"} alt="Image showing the DAG" width="600"/>
+</p>
 
-Casper networks use a consensus protocol called [Highway](https://arxiv.org/pdf/2101.02159.pdf), ensuring the Safety and Liveness requirements of these networks. Highway is a Byzantine Fault Tolerant protocol requiring a partially synchronous network. 
 
-### How does the Casper Mainnet use Highway?
+Nodes must cite the latest unit received from every node, including their latest unit. If a validator does not follow the process and thus equivocates, their bid gets deactivated. However, the validator is not slashed. When a node equivocates, it can still send units but may not be a validator.
 
-The Casper Mainnet is a [Proof-of-Stake](../glossary/P.md#proof-of-stake) network in which the on-chain auction contract determines validators participating in Highway. The protocol uses a decentralized network of [nodes](../glossary/N.md#node), either bonded or unbonded. Nodes actively participating in the consensus process must stake CSPR tokens and are known as [Validator Nodes](../glossary/V.md#validator). The top 100 bidders are selected through the auction contract every era to act as validators in the era after the next (Current Era + 2). Nodes with a greater stake in the network's success have a greater weight in reaching consensus. Highway does not necessitate a Proof-of-Stake method of choosing validators and could theoretically be used alongside a private network with a different model.
+The Highway protocol proceeds in rounds with a minimum round length. Different nodes can use different round lengths, and ratios of round lengths are always powers of 2. Highway is a partially synchronous protocol because it is not bound to a specific time set in advance, and the network can adjust to delays. Thus, the protocol guarantees partially synchronous liveness. Multiple rounds form an era.
 
-These validators run a Casper network that will continue to function so long as the amount of faulty or dishonest nodes does not exceed one-third of the total number of nodes in the network. Nodes that are not faulty are *honest* nodes. In most cases, the system can assume that more than two-thirds of all nodes will actively collaborate to achieve consensus. Therefore, stronger-than-average finality guarantees occur during periods when all nodes are acting honestly. A block's fault tolerance increases beyond one-third as the protocol continues. If all validators are honest, it approaches 100%.
+## Block Finalization
 
-### Dynamic Round Length
+In each round, the assigned leader proposes a list of deploys to be included in a block. A block is finalized if there is a summit among the cited units. A summit is a structure within the graph characterized by a quorum *q*, a percentage of the participating validator weight, and a level *k*. Level *k* represents the depth in the graph. For a given fault tolerance threshold *t* (FTT), finality is defined as:
 
-Within the Highway protocol, the length of a round is determined dynamically to ensure a suitable amount of time for nodes to gossip all messages through several round trips with honest validators. This ensures that the system maintains liveness by ensuring that all messages are properly gossiped while maintaining a timely addition of blocks to the chain.
+<p align="center">
+<img src={"/image/design/highway-finality.png"} alt="Image showing the finality equation" width="200"/>
+</p>
 
-### Eras
+If *q* is close to *n*, meaning the whole network participates, a block can be finalized with a high fault tolerance threshold (FTT).
 
-The concept of *eras* allows Highway to reduce the overall operational storage requirements of participating nodes while also rotating validators. A new instance of Highway runs every two hours or approximately 220 blocks, depending on current network metrics. This allows for two benefits:
+The existence of such a summit means that a weight of more than *t* would have to equivocate to finalize a conflicting block. In other words, the FTT is the weight of the nodes that would have to collude to finalize a conflicting block and revert the transactions in that block. 
 
-* **Data Reduction** - Older "metadata" used in finalizing certain blocks is no longer useful and can be removed without compromising the immutability of the data stored on the blockchain.
+In Mainnet, the FTT was one-third of the validator weight. If over one-third of the validator weight was faulty, those nodes could have prevented block finalization and stalled the network.
 
-* **Banning Equivocators** - Dishonest nodes caught equivocating in a previous era are banned from participating in new eras. This allows honest nodes to begin a new era in the *relaxed mode*, no longer needing to send endorsements due to past equivocations.
+## Important Links
 
-* **Rotating Validators** - Bonded nodes bid on validator spots each era, with the top 100 highest bidders becoming validators for the era after next (`N`+2).
-
-In any given era, node operators will bid to become validators that will participate in the consensus mechanism for the era after next (`N`+2). Each time slot within the era will also determine a lead validator. The lead validator proposes new blocks to be added to the chain, which are then gossiped among the network's nodes. These messages show an implicit preference for the lead validator's block due to the GHOST (Greedy Heaviest Observed Sub-Tree) rule. Once this process reaches critical mass, with a sufficient interconnected pattern of messages, it becomes impossible to switch to another block. The selected block is then considered finalized and added to the chain.
-
-The final block of an era is a *switch block* and forms the initial state of the next era. A new Highway instance begins with the new era, using information contained within the *switch block* and a new potential set of validators. More details on the auction process to determine an era's validators can be found within the [Consensus Economics](../economics/consensus.md) page.
-
-### Finality
-
-Finality occurs when the network can be sure that a block will not be altered, reversed, or canceled after addition to the chain. This occurs via consensus, and as all transactions happen within a block, it allows for confirmation that a transaction cannot be changed. After finality, it would require greater than 1/3 of all validators to double-sign to cause a disparity between nodes. In this event, the network would shut down and require a manual restart.
-
-On a Casper network, a transaction finalizes alongside the finalizing of the block in which it is included. Validators that equivocate risk eviction, in which the network removes them from the validator set. Therefore, honest nodes receive rewards for their participation, while equivocating nodes risk loss of revenue for acting maliciously.
-
-Highway's criterion for detecting finality is the presence of a pattern of messages called a `Summit`. It is an improvement over previous CBC Casper finality criteria, which were more difficult to attain and computationally more expensive to detect. Summits preserve the advantage of tunable fault tolerance while being detected in polynomial time.
+- [Highway Whitepaper](https://arxiv.org/pdf/2101.02159.pdf) - Describes the protocol, and the liveness and safety proofs in detail
+- [Zug Consensus](./zug.md) - The protocol currently used in Mainnet and Testnet

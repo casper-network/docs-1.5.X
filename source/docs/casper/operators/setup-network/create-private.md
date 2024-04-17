@@ -27,7 +27,7 @@ Casper private networks operate in a similar way to the Casper public network. T
 ## Prerequisites
 Follow these guides to set up the required environment and user accounts.
 - [Setting up the Casper client](../../developers/prerequisites.md#the-casper-command-line-client)
-- [Setting up the client for interacting with the network](https://github.com/casper-ecosystem/casper-client-rs/blob/main/README.md#casper-client)
+- [Setting up the client for interacting with the network](https://github.com/casper-ecosystem/casper-client-rs/blob/dev/README.md#casper-client)
 - [Setting up an Account](../../developers/prerequisites.md#setting-up-an-account)
 
 
