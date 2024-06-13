@@ -34,8 +34,8 @@ This message is due to the default `openssl` moving to 3.* with Ubuntu 22.04. Yo
 https://packages.ubuntu.com/focal/amd64/libssl1.1/download
 
 ```
-wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
-sudo dpkg -i ./libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
+curl -f -JLO http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
+sudo apt install ./libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
 ```
 
 ## Required Number of Open Files
