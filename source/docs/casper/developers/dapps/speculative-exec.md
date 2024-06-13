@@ -1,16 +1,16 @@
 # Estimating Gas Costs with Speculative Execution
 
-Version 1.5 of the Casper Node includes a new JSON RPC endpoint called [`speculative_exec`](../json-rpc/json-rpc-transactional.md#speculative_exec-speculative_exec). This endpoint allows developers to send a [Deploy](../../concepts/glossary/D.md#deploy-deploy) to a single node, which will execute the Deploy without committing the results to global state and, therefore, not incurring the associated costs. Observing the execution results of the Deploy gives a rough estimate of the potential cost for sending the Deploy without speculative execution.
+Version 1.5 of the Casper Node includes a new JSON RPC endpoint called [`speculative_exec`](../json-rpc/json-rpc-transactional.md#speculative_exec-speculative_exec). This endpoint allows developers to send a [transaction](../../concepts/glossary/T.md#transaction) to a single node, which will execute it without committing the results to global state and, therefore, not incurring the associated costs. Observing the execution results gives a rough estimate of the potential cost for sending the transaction without speculative execution.
 
-In addition to the Deploy in question, `speculative_exec` also accepts a [`block_identifier`] for a specific block height or hash to speculate on. If you do not provide a block identifier, the Deploy will be executed on the most recent block.
+In addition to the transaction in question, `speculative_exec` also accepts a [`block_identifier`] for a specific block height or hash to speculate on. If you do not provide a block identifier, the transaction will be executed on the most recent block.
 
-## Sending a Speculative Execution Deploy using the Rust CLI Casper Client
+## Sending a Speculative Execution Transaction using the Rust CLI Casper Client
 
-The [Rust CLI Casper client](../cli/sending-transactions.md) includes a `speculative-exec` option that will flag a normal `put-deploy` for execution but not commitment to global state. The following command shows an example:
+The [Rust CLI Casper client](../cli/sending-transactions.md) includes a `speculative-exec` option that will flag a normal `put-txn` for execution but not commitment to global state. The following command shows an example:
 
 ```bash
 
-casper client put-deploy /
+casper client put-txn /
 --node-address <HOST:PORT> /
 --chain-name <CHAIN_NAME> /
 --secret-key <PATH> /
@@ -46,6 +46,6 @@ You should receive `execution_result`s that show a `cost`.
 
 :::note
 
-Cost estimates acquired through `speculative_exec` may vary from the cost of sending the same Deploy to a Casper network. Speculative execution is a tool to help narrow down the potential cost of sending a Deploy, but many factors can cause the actual cost to vary.
+Cost estimates acquired through `speculative_exec` may vary from the cost of sending the same transaction to a Casper network. Speculative execution is a tool to help narrow down the potential cost of sending a transaction, but many factors can cause the actual cost to vary.
 
 :::
