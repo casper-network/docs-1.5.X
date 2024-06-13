@@ -6,27 +6,26 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Calling Smart Contracts with the Rust Client
 
-Smart contracts exist as stored on-chain logic, allowing disparate users to call the included entry points. This tutorial covers different ways to call Casper contracts with the [Casper command-line client](../prerequisites.md#the-casper-command-line-client) and the `put-deploy` command. Each section below includes a short video demonstrating some example output.
+Smart contracts exist as stored on-chain logic, allowing users to interact with pre-defined entry points. This tutorial covers different ways to call Casper contracts with the [Casper command-line client](../prerequisites.md#the-casper-command-line-client) and the `put-txn` command. Each section below includes a short video demonstrating some example output.
 
 The following examples use two contracts on [Testnet](https://testnet.cspr.live/):
 
-- The [Counter contract](https://github.com/casper-ecosystem/counter/blob/master/contract-v1/src/main.rs) described while [Writing a Basic Smart Contract in Rust](../writing-onchain-code/simple-contract.md). You will need to [install this contract](./installing-contracts.md) on Testnet
-- The Auction contract found in [this contract package](https://testnet.cspr.live/contract-package/e375d42c29c0e4b2baefa63cf2d70af34439eda851e08129d8515515d63bd6a9), already installed on Testnet as a system contract. The examples will call its `delegate` entry point
-
+-   The [Counter contract](https://github.com/casper-ecosystem/counter/blob/master/contract-v1/src/main.rs) described while [Writing a Basic Smart Contract in Rust](../writing-onchain-code/simple-contract.md). You will need to [install this contract](./installing-contracts.md) on Testnet
+-   The Auction contract found in [this contract package](https://testnet.cspr.live/contract-package/e375d42c29c0e4b2baefa63cf2d70af34439eda851e08129d8515515d63bd6a9), already installed on Testnet as a system contract. The examples will call its `delegate` entry point
 
 ## Prerequisites {#prerequisites}
 
-- You know how to [send and verify deploys](../cli/sending-transactions.md)
-- You know how to [install contracts and query global state](./installing-contracts.md) using the [default Casper client](../prerequisites.md#the-casper-command-line-client)
-- Install the [Counter contract](https://github.com/casper-ecosystem/counter/blob/master/contract-v1/src/main.rs) on Testnet if you have not done so already
-- Review the [system Auction contract](https://testnet.cspr.live/contract-package/e375d42c29c0e4b2baefa63cf2d70af34439eda851e08129d8515515d63bd6a9) on Testnet
+-   You know how to [send and verify transactions](../cli/sending-transactions.md)
+-   You know how to [install contracts and query global state](./installing-contracts.md) using the [default Casper client](../prerequisites.md#the-casper-command-line-client)
+-   Install the [Counter contract](https://github.com/casper-ecosystem/counter/blob/master/contract-v1/src/main.rs) on Testnet if you have not done so already
+-   Review the [system Auction contract](https://testnet.cspr.live/contract-package/e375d42c29c0e4b2baefa63cf2d70af34439eda851e08129d8515515d63bd6a9) on Testnet
 
 ## Calling Contracts by Contract Hash {#calling-contracts-by-hash}
 
-After [installing a contract](./installing-contracts.md) in global state, you can use the contract's hash to call one of its entry points. The following usage of `put-deploy` allows you to call an entry point and receive a deploy hash. The hash is needed to verify that the deploy was processed successfully.
+After [installing a contract](./installing-contracts.md) in global state, you can use the contract's hash to call one of its entry points. The following usage of `put-txn` allows you to call an entry point and receive a transaction hash. The hash is needed to verify that the transaction was processed successfully.
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address [NODE_SERVER_ADDRESS] \
     --chain-name [CHAIN_NAME] \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -36,19 +35,20 @@ casper-client put-deploy \
 ```
 
 The arguments used above are:
+
 -   `node-address` - An IP address of a peer on the network. The default port for JSON-RPC servers on Mainnet and Testnet is 7777
--   `chain-name` - The chain name of the network where you wish to send the deploy. For Mainnet, use *casper*. For Testnet, use *casper-test*
--   `secret-key` - The file name containing the secret key of the account paying for the deploy
--   `payment-amount` - The payment for the deploy in motes
+-   `chain-name` - The chain name of the network where you wish to submit the transaction. For Mainnet, use _casper_. For Testnet, use _casper-test_
+-   `secret-key` - The file name containing the secret key of the account signing the transaction
+-   `payment-amount` - The payment for the transaction in motes
 -   `session-hash` - Hex-encoded hash of the stored contract to be called as the session
--   `session-entry-point` - Name of the method that will be used when calling the session contract
+-   `session-entry-point` - Name of the entry-point that will be used when calling the session contract
 
 **Example - Calling the Counter contract by hash:**
 
 In this example, the `--session-hash` option identifies a stored contract with an entry-point called "counter-inc".
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -57,15 +57,15 @@ casper-client put-deploy \
     --session-entry-point "counter-inc"
 ```
 
-This `put-deploy` command is nearly identical to the command used to [install the contract](./installing-contracts.md#installing-contract-code). Here, instead of `session-path` pointing to the Wasm binary, we have `session-hash` and `session-entry-point` identifying the on-chain contract and its associated entry point. No Wasm file is needed in this example since the contract is already on the blockchain, and the entry point doesn’t return a value. If an entry point returns a value, use code to [interact with runtime return values](../../resources/advanced/return-values-tutorial.md).
+This `put-txn` command is nearly identical to the command used to [install the contract](./installing-contracts.md#installing-contract-code). Here, instead of `session-path` pointing to the Wasm binary, we have `session-hash` and `session-entry-point` identifying the on-chain contract and its associated entry point. No Wasm file is needed in this example since the contract is already on the blockchain, and the entry point doesn’t return a value. If an entry point returns a value, use code to [interact with runtime return values](../../resources/advanced/return-values-tutorial.md).
 
 :::tip
 
-The payment amount varies based on each deploy and network [chainspec](../../concepts/glossary/C.md#chainspec).
+The payment amount varies based on each transaction and network [chainspec](../../concepts/glossary/C.md#chainspec).
 
 :::
 
-The following sample response contains a `deploy_hash`, needed to verify the changes in global state, as described [here](./installing-contracts.md#querying-global-state).
+The following sample response contains a `transaction_hash`, needed to verify the changes in global state, as described [here](./installing-contracts.md#querying-global-state).
 
 <details>
 <summary>Sample response</summary>
@@ -76,10 +76,11 @@ The following sample response contains a `deploy_hash`, needed to verify the cha
   "jsonrpc": "2.0",
   "result": {
     "api_version": "1.4.5",
-    "deploy_hash": "24b58fbc0cbbfa3be978e7b78b9b37fc1d17c887b1abed2b2e2e704f7ee5427c"
+    "transaction_hash": "24b58fbc0cbbfa3be978e7b78b9b37fc1d17c887b1abed2b2e2e704f7ee5427c"
   }
 }
 ```
+
 </details>
 <br></br>
 
@@ -87,17 +88,22 @@ The following sample response contains a `deploy_hash`, needed to verify the cha
 
 This video shows how to query a previously installed Counter contract by hash.
 
+:::note
+
+**Terminology:** While the videos in this section use the term 'deploy' and the command `put-deploy`, this terminology has been updated. We now refer to all deploys as 'transactions', and the current command to use is `put-txn`, however the old command `put-deploy` is still being supported.
+
+:::note
+
 <p align="center">
 <iframe width="400" height="225" src="https://www.youtube.com/embed?v=sUg0nh3K3iQ&list=PL8oWxbJ-csEqi5FP87EJZViE2aLz6X1Mj&index=11" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
-
 ## Calling Contracts with Session Arguments {#calling-contracts-with-session-args}
 
-When calling contract entry points, you may need to pass in information using session arguments. The `put-deploy` command allows you to do this with the `--session-arg` option:
+When calling contract entry points, you may need to pass in information using session arguments. The `put-txn` command allows you to do this with the `--session-arg` option:
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address [NODE_SERVER_ADDRESS] \
     --chain-name [CHAIN_NAME] \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -108,9 +114,10 @@ casper-client put-deploy \
 ```
 
 The arguments of interest are:
+
 -   `session-hash` - Hex-encoded hash of the stored contract to be called as the session
--   `session-entry-point` - Name of the method that will be used when calling the session contract
--   `session-arg` - For simple CLTypes, a named and typed arg is passed to the Wasm code. To see an example for each type, run: 'casper-client put-deploy --show-arg-examples'
+-   `session-entry-point` - Name of the entry-point that will be used when calling the session contract
+-   `session-arg` - For simple CLTypes, a named and typed arg is passed to the Wasm code. To see an example for each type, run: 'casper-client put-txn --show-arg-examples'
 
 **Example - Calling the Auction contract using session arguments:**
 
@@ -123,7 +130,7 @@ This example demonstrates how to call the Auction contract's entry point `delega
 To make the call, we use the contract hash, `hash-93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2`, and the `--session-hash` option.
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -143,13 +150,12 @@ This video shows how to call a modified Counter contract using session arguments
 <iframe width="400" height="225" src="https://www.youtube.com/embed/XB_ojY1_0Uo" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
-
 ## Calling Contracts by Package Hash {#calling-contracts-by-package-hash}
 
-You can also call an entry point in a contract that is part of a contract package (see [contract upgrades](../writing-onchain-code/upgrading-contracts.md)). Call `put-deploy` using the stored package hash, the entry point you wish to access, the contract version number, and any runtime arguments. The call defaults to the highest enabled version if no version was specified.
+You can also call an entry point in a contract that is part of a contract package (see [contract upgrades](../writing-onchain-code/upgrading-contracts.md)). Call `put-txn` using the stored package hash, the entry point you wish to access, the contract version number, and any runtime arguments. The call defaults to the highest enabled version if no version was specified.
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address [NODE_SERVER_ADDRESS] \
     --chain-name [CHAIN_NAME] \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -160,6 +166,7 @@ casper-client put-deploy \
 ```
 
 The arguments of interest are:
+
 -   `session-package-hash` - Hex-encoded hash of the stored package to be called as the session
 -   `session-entry-point` - Name of the method that will be used when calling the session contract
 -   `session-version` - Version of the called session contract. The latest will be used by default
@@ -169,7 +176,7 @@ The arguments of interest are:
 In this example, we call the Counter contract by its package hash and version number. The entry point invoked is "counter-inc".
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -193,7 +200,7 @@ To find the contract package hash, look at the account's named keys associated w
 This example demonstrates how to call the Auction contract's `delegate` entry point by specifying the package hash using the `--session-package-hash` option. The call defaults to the highest enabled version since no version was specified with the `--session-version` option.
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -217,10 +224,10 @@ The video shows how to query the previously installed Counter contract package.
 
 We can also reference a contract using a key as the contract name. When you write the contract, use the `put_key` function to add the ContractHash under the contract's [NamedKeys](https://docs.rs/casper-types/latest/casper_types/contracts/type.NamedKeys.html#).
 
-Having a key enables you to call a contract's entry-point in global state by using the `put-deploy` command as illustrated here:
+Having a key enables you to call a contract's entry-point in global state by using the `put-txn` command as illustrated here:
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address [NODE_SERVER_ADDRESS] \
     --chain-name [CHAIN_NAME] \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -230,8 +237,9 @@ casper-client put-deploy \
 ```
 
 The arguments of interest are:
+
 -   `session-name` - Name of the stored contract (associated with the executing account) to be called as the session
--   `session-entry-point` - Name of the method that will be used when calling the session contract
+-   `session-entry-point` - Name of the entry-point that will be used when calling the session contract
 
 **Example 1 - Calling the Counter contract using a named key:**
 
@@ -244,7 +252,7 @@ runtime::put_key(CONTRACT_KEY, stored_contract_hash.into());
 The following command invokes the entry point "counter_inc" and the contract stored under the "counter" named key.
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [PATH_TO_YOUR_KEY]/secret_key.pem \
@@ -253,14 +261,14 @@ casper-client put-deploy \
     --session-entry-point "counter_inc"
 ```
 
-The sample response will contain a `deploy_hash`, which you need to use as described [here](./installing-contracts.md#querying-global-state) to verify the changes in global state.
+The sample response will contain a `transaction_hash`, which you need to use as described [here](./installing-contracts.md#querying-global-state) to verify the changes in global state.
 
 **Example 2 - Calling the Auction contract using a named key:**
 
 This example uses the system Auction contract stored in global state under the "auction" key and its `delegate` entry point.
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -280,13 +288,12 @@ This short video shows how to query the previously installed Counter contract us
 <iframe width="400" height="225" src="https://www.youtube.com/embed?v=sUg0nh3K3iQ&list=PL8oWxbJ-csEqi5FP87EJZViE2aLz6X1Mj&index=12" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
-
 ## Calling Contracts by Package Name {#calling-contracts-by-package-name}
 
-To call an entry point in a contract by referencing the contract package name, you can use the `session-package-name`, `session-entry-point`, and `session-version` arguments. This will enable you to access the entry point in global state by using the `put-deploy` command as illustrated here:
+To call an entry point in a contract by referencing the contract package name, you can use the `session-package-name`, `session-entry-point`, and `session-version` arguments. This will enable you to access the entry point in global state by using the `put-txn` command as illustrated here:
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address [NODE_SERVER_ADDRESS] \
     --chain-name [CHAIN_NAME] \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -297,13 +304,14 @@ casper-client put-deploy \
 ```
 
 The arguments of interest are:
+
 -   `session-package-name` - Name of the stored package to be called as the session
--   `session-entry-point` - Name of the method that will be used when calling the session contract
+-   `session-entry-point` - Name of the entry-point that will be used when calling the session contract
 -   `session-version` - Version of the called session contract. The latest will be used by default
 
 **Example 1 - Specifying the package name and version number:**
 
-This example calls the entry point "counter-inc" as part of the contract package name "counter_package_name", version 1, without any runtime arguments. 
+This example calls the entry point "counter-inc" as part of the contract package name "counter_package_name", version 1, without any runtime arguments.
 
 You should have previously created the contract by using [new_contract](https://docs.rs/casper-contract/latest/casper_contract/contract_api/storage/fn.new_contract.html), and provided the contract package name as the `hash_name` argument of `new_contract`.
 
@@ -311,8 +319,8 @@ This example code stores the "contract_package_name" into a NamedKey, which you 
 
 ```rust
     let (stored_contract_hash, contract_version) =
-        storage::new_contract(counter_entry_points, 
-            Some(counter_named_keys), 
+        storage::new_contract(counter_entry_points,
+            Some(counter_named_keys),
             Some("counter_package_name".to_string()),
             Some("counter_access_uref".to_string())
     );
@@ -321,7 +329,7 @@ This example code stores the "contract_package_name" into a NamedKey, which you 
 Here is the command to call the contract using the package name:
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -329,14 +337,14 @@ casper-client put-deploy \
     --session-package-name "counter_package_name" \
     --session-entry-point "counter-inc" \
     --session-version 1
-```      
+```
 
 **Example 2 - Calling the package without specifying the version:**
 
 This example demonstrates how to call a contract that is part of the `erc20_test_call` package using runtime arguments. The call invokes the "check_balance_of" entry point and defaults to the highest enabled version since no version was specified.
 
 ```rust
-    casper-client put-deploy \
+    casper-client put-txn \
     --node-address http://3.143.158.19:7777 \
     --chain-name integration-test \
     --secret-key ~/casper/demo/user_a/secret_key.pem \
@@ -344,12 +352,12 @@ This example demonstrates how to call a contract that is part of the `erc20_test
     --session-package-name "erc20_test_call" \
     --session-entry-point "check_balance_of" \
     --session-arg "token_contract:account_hash='account-hash-b568f50a64acc8bbe43462ffe243849a88111060b228dacb8f08d42e26985180'" \
-    --session-arg "address:key='account-hash-303c0f8208220fe9a4de40e1ada1d35fdd6c678877908f01fddb2a56502d67fd'" 
+    --session-arg "address:key='account-hash-303c0f8208220fe9a4de40e1ada1d35fdd6c678877908f01fddb2a56502d67fd'"
 ```
 
 **Video - Calling a contract using the package name:**
 
-This video demonstrates how to call versioned contracts by package name. 
+This video demonstrates how to call versioned contracts by package name.
 
 <p align="center">
 <iframe width="400" height="225" src="https://www.youtube.com/embed?v=sUg0nh3K3iQ&list=PL8oWxbJ-csEqi5FP87EJZViE2aLz6X1Mj&index=16" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -357,10 +365,10 @@ This video demonstrates how to call versioned contracts by package name.
 
 ## Calling a Contract using Wasm {#calling-a-contract-using-wasm}
 
-Session code or contract code (compiled to Wasm) can act on a contract and change its state. The `put-deploy` command supports this mechanism as well:
+Session code or contract code (compiled to Wasm) can act on a contract and change its state. The `put-txn` command supports this mechanism as well:
 
 ```rust
-casper-client put-deploy \
+casper-client put-txn \
     --node-address [NODE_SERVER_ADDRESS] \
     --chain-name [CHAIN_NAME] \
     --secret-key [KEY_PATH]/secret_key.pem \
@@ -369,6 +377,7 @@ casper-client put-deploy \
 ```
 
 The argument of interest is:
+
 -   `session-path` - The path to the compiled Wasm on your computer
 
 **Example - Session code acting on a contract:**
@@ -377,7 +386,7 @@ The [Counter Contract Tutorial](../../resources/beginner/counter/index.md) shows
 
 ```rust
 
-casper-client put-deploy \
+casper-client put-txn \
     --node-address http://65.21.235.219:7777 \
     --chain-name casper-test \
     --secret-key [PATH_TO_YOUR_KEY]/secret_key.pem \
@@ -392,14 +401,13 @@ casper-client put-deploy \
 <iframe width="400" height="225" src="https://www.youtube.com/embed?v=sUg0nh3K3iQ&list=PL8oWxbJ-csEqi5FP87EJZViE2aLz6X1Mj&index=13" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
-
-## Calling Contracts that Return a Value
+## Calling Smart Contracts that Return a Value
 
 Visit the [Interacting with Runtime Return Values](../../resources/advanced/return-values-tutorial.md) tutorial to learn how to call a contract that returns a value using session code or contract code.
 
 ## What's Next? {#whats-next}
 
-- The [Counter Contract Tutorial](../../resources/beginner/counter/index.md) takes you through a detailed walkthrough on how to query global state to verify a contract's state
-- Learn more about [Delegating with the Casper Client](./delegate.md)
-- Look into the [Resources for Smart Contract Authors](/resources/)
-- See the [Developer How To Guides](/developers)
+-   The [Counter Contract Tutorial](../../resources/beginner/counter/index.md) takes you through a detailed walkthrough on how to query global state to verify a contract's state
+-   Learn more about [Delegating with the Casper Client](./delegate.md)
+-   Look into the [Resources for Smart Contract Authors](/resources/)
+-   See the [Developer How To Guides](/developers)
