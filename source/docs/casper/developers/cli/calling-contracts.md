@@ -90,7 +90,7 @@ This video shows how to query a previously installed Counter contract by hash.
 
 :::note
 
-**Terminology:** While the videos in this section use the term 'deploy' and the command `put-deploy`, this terminology has been updated. We now refer to all deploys as 'transactions', and the current command to use is `put-txn`, however the old command `put-deploy` is still being supported.
+**Terminology:** While the videos in this section use the term 'deploy' and the command `put-deploy`, this terminology has been updated. We now refer to all deploys as 'transactions', and the current command to use is `put-txn`; however, the old command `put-deploy` is still being supported.
 
 :::note
 
