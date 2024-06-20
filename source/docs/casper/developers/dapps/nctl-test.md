@@ -36,17 +36,27 @@ nctl-view-user-account user=1
 
 This document assumes that you setup your NCTL network using the standard settings in a directory called _/casper/_.
 
-You will need the following information to use the `put-txn` command:
+You will need the following information to use the `put-txn` command with `session` option:
 
 -   The **chain name**, in this case `casper-net-1`. This will appear in our example put-txn as `--chain-name "casper-net-1"`
 
--   The **secret key** of the account singning the `Transaction`. For this example, we are using node-1 as the signer. The secret key file can be found at _casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem_. In our example put-txn, this will appear as `--secret-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem`. If your transaction is more complex and requires multiple accounts, NCTL also establishes multiple users for testing.
+-   The **secret key** of the account singning the `Transaction`. For this example, we are using node-1 as the signer. The secret key file can be found at _casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem_. In our example put-txn, this will appear as `--secret-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem`. If your transaction is more complex and requires multiple accounts, NCTL also establishes multiple users for testing. You can also
 
 -   The **payment amount** in motes, which should be sufficient to avoid an 'Out of Gas' error. The payment amount will appear in our example put-txn as `--payment-amount 2500000000`. **NCTL tests are not an accurate representation of potential gas costs on a live network. Please see our [note about gas prices](../../developers/cli/sending-transactions.md#a-note-about-gas-price).**
 
--   The **path** to your `Contract` that you wish to send to the NCTL network. This will appear in our example put-txn as `--session-path <PATH>` and will require you to define the path to your specific `Contract` Wasm.
-
 -   The **node address** for a node on your NCTL network. In this example, we are using the node at `http://localhost:11101`. On the Casper Mainnet or Testnet, nodes will use port `7777`. This will appear in our example put-txn as `--node-address http://<HOST>:7777`.
+
+-   The **gas-price-tolerance** the maximum gas price that the user is willing to pay for the transaction.
+
+-   The **pricing-mode** used to identify the payment mode chosen to execute the transaction.
+
+-   The **session-entry-point** name of the method that will be used when calling the session contract.
+
+-   The **standard-payment** flag to determine if this transaction uses standard or custom payment.
+
+-   The **category** transaction category [possible values: install-upgrade, large, medium, small].
+
+-   The **transaction-path** to your `Contract` WASM file that you wish to send to the NCTL network.
 
 The command to send your `Transaction` should look similar to the following code snippet:
 
@@ -57,24 +67,31 @@ Use of the `$(get_path_to_client)` command assumes that you are operating in an 
 :::
 
 ```
-$(get_path_to_client) put-txn \
---chain-name "casper-net-1" \
---secret-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem \
---payment-amount 2500000000 \
---session-path <PATH> \
+$(get_path_to_client) put-txn session \
 --node-address http://localhost:11101
+--chain-name casper-net-1 \
+--pricing-mode fixed \
+--gas-price-tolerance 10 \
+--standard-payment true \
+--category install-upgrade
+--payment-amount 2500000000 \
+--secret-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem \
+--transaction-path <PATH> \
+--session-entry-point <Name of the entry point> \
 ```
 
 The response will return something similar to the following information. Note the `transaction_hash`:
 
 ```
 {
-    "id": 4824893960188648146,
-    "jsonrpc": "2.0",
-    "result": {
-        "api_version": "1.0.0",
-        "transaction_hash": "8e6309cc37bc58d8fedc1094ee1bd264a636d39fc0e05b5e1d72d98f7b6faf13"
+  "jsonrpc": "2.0",
+  "id": 2954769041950332810,
+  "result": {
+    "api_version": "2.0.0",
+    "transaction_hash": {
+      "Version1": "cb34519aa21a1c285aceeaf808ed7745e1f79d0b69dacb67d05e111281923c07"
     }
+  }
 }
 ```
 
@@ -85,38 +102,49 @@ The previous command sent the `Transaction` to the NCTL network, but we recommen
 To query the `Transaction`'s status, you will pass both the `transaction_hash` and the same `node-address` from above using the following command. This will return either an error message in the event of failure or the `Transaction` details if it succeeds.
 
 ```
-$(get_path_to_client) get-transaction 8e6309cc37bc58d8fedc1094ee1bd264a636d39fc0e05b5e1d72d98f7b6faf13 -n http://localhost:11101
+$(get_path_to_client) get-txn cb34519aa21a1c285aceeaf808ed7745e1f79d0b69dacb67d05e111281923c07 -n http://localhost:11101
 ```
 
 ## Interacting with the Installed Contract
 
-Once your NCTL network executes your `Transaction`, you can test the functionality of the installed contract. To do so, you will first need to identify any arguments to pass to the contract, starting with the `ContractHash` itself. This hash identifies the contract and allows you to target the included entry points. As we used the pre-established node-1 account to [send the `Transaction`](../../developers/cli/sending-transactions.md), we can retrieve the `ContractHash` from the node-1 account information. To do so, we will use the following command with a node address and the `PublicKey` of the node in question.
+Once your NCTL network executes your `Transaction`, you can test the functionality of the installed contract. To do so, you will first need to identify any arguments to pass to the contract, starting with the `ContractHash` itself. This hash identifies the contract and allows you to target the included entry points. As we used the pre-established node-1 account (addresable entity) to [send the `Transaction`](../../developers/cli/sending-transactions.md), we can retrieve the `ContractHash` from the node-1 account information. To do so, we will use the following command with a node address and the `PublicKey` of the node in question.
 
 ```
-$(get_path_to_client) get-account-info \
+$(get_path_to_client) get-entity \
 --node-address http://localhost:11101 \
---public-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/public_key.pem
+--entity-identifier /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/public_key.pem
 ```
 
 This command will return information pertaining to the account, including the `NamedKeys`. The `ContractHash` of the contract to be tested will appear here. The process of calling the contract is similar to that of installing it, as they are both accomplished through sending a `Transaction`. In this instance, you will need the following information:
 
--   The **node address**, entered in this instance using `--node-address http://localhost:11101`
+-   The **node-address**, entered in this instance using `--node-address http://localhost:11101`
 
--   The **chain name**, entered in this instance using `--chain-name "casper-net-1"`
+-   The **chain-name**, entered in this instance using `--chain-name casper-net-1` The **pricing-mode** used to identify the payment mode chosen to execute the transaction.
 
--   The **payment amount** for this `Transaction` in motes, which may need to be adjusted depending on cost and network [chainspec](../../concepts/glossary/C.md#chainspec). In this instance, we will use `--payment-amount 500000000`
+-   The **payment-amount** for this `Transaction` in motes, which may need to be adjusted depending on cost and network [chainspec](../../concepts/glossary/C.md#chainspec). In this instance, we will use `--payment-amount 500000000`.
 
--   The **session path**, defining the location of the Wasm bearing file for the `Transaction`. It appears in our example as `--session-path <PATH>` but you must define the path to your specific file.
+-   The **gas-price-tolerance** the maximum gas price that the user is willing to pay for the transaction.
 
--   Any **session arguments** specific to the contract that you are testing. Multiple instances of `--session-arg` may be used as necessary to provide values to the contract, including the `ContractHash` you acquired above. In the example below, you will see a demonstration of the `ContractHash` as a session argument as `--session-arg "contract_key:key='hash-8c13aaeef50ae7f447ee21276965c31cfa45c4ea3abb03d35d078cdd6a40e4a'"`
+-   The **standard-payment** flag to determine if this transaction uses standard or custom payment.
+
+-   The **secret-key** path. If not provided, the transaction will not be signed and will remain invalid until signed, for example by running the `sign-transaction` subcommand.
+
+-   The **entity-address** formatted string representing an addressable entity address. Our contract is a addresable and invocable entity.
+
+-   The **session-entry-point** name of the method that will be used when calling the session contract. This is any of the entry points that are defined in our smart contract.
+
+-   Any **session arguments** specific to the contract that you are testing. Multiple instances of `--session-arg` may be used as necessary to provide values to the entry points of the smart contract.
 
 ```
 $(get_path_to_client) put-txn \
 --node-address http://localhost:11101 \
---chain-name "casper-net-1" \
+--chain-name casper-net-1 \
+--gas-price-tolerance 10 \
 --payment-amount 500000000 \
---session-path <PATH> \
---session-arg "contract_key:key='hash-8c13aaeef50ae7f447ee21276965c31cfa45c4ea3abb03d35d078cdd6a40e4a'"
+--standard-payment true \
+--secret-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem \
+--session-entry-point <Name of the entry point> \
+--entity-address entity-contract-8c13aaeef50ae7f447ee21276965c31cfa45c4ea3abb03d35d078cdd6a40e4a
 ```
 
 ## Verifying Correct Contract Behavior
