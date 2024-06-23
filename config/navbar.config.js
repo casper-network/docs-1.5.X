@@ -10,12 +10,6 @@ module.exports = {
     },
     // hideOnScroll: true,
     items: [
-        // {
-        //     to: `${routePrefix}/api`,
-        //     activeBasePath: "${routePrefix}/api",
-        //     label: "Documentation",
-        //     position: "left",
-        // },
         {
             to: `${routePrefix}/resources/quick-start`,
             label: "Quickstart",
@@ -46,9 +40,20 @@ module.exports = {
             position: "left",
         },
         {
+            to: `${routePrefix}/glossary`,
+            label: "Glossary",
+            position: "left",
+        },
+        {
             to: `${routePrefix}/resources`,
             activeBasePath: `${routePrefix}/resources`,
             label: "Resources",
+            position: "left",
+        },
+        {
+            to: `${routePrefix}/resources/tutorials`,
+            activeBasePath: `${routePrefix}/resources/tutorials`,
+            label: "Tutorials",
             position: "left",
         },
         {
