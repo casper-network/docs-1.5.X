@@ -13,7 +13,7 @@ In the Testnet, era durations are approximately two hours. The entire process ta
 This method submits a bid using the system auction contract. Call the existing `add_bid` entry point from the system auction contract. Using this method, you do not need to build any contracts, reducing costs and complexity.
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address <HOST:PORT> \
 --secret-key <PATH> \
 --chain-name <CHAIN_NAME> \
@@ -55,7 +55,7 @@ Calling the `add_bid` entry point on the auction contract has a fixed cost of 2.
 This example command uses the Casper Testnet to bid 10,000 CSPR for a validating slot:
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.75.254:7777 \
 --chain-name casper-test \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
@@ -76,7 +76,7 @@ Another way to send a bonding transaction to the network is via a deploy contain
 The following deploy is a template for sending a bonding request:
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://<HOST:PORT> \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name <CHAIN_NAME> \
@@ -112,7 +112,7 @@ This method is more expensive than calling the `add_bid` entrypoint in the syste
 Here is an example request to bond using the `add_bid.wasm`. The payment amount specified is 3 CSPR. You must modify the payment and other values in the deploy based on the network's [chainspec.toml](../../concepts/glossary/C.md#chainspec).
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.235.219:7777 \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name casper-test \

@@ -11,7 +11,7 @@ Once a bid is placed, it will remain in the state of the auction contract, even 
 This method withdraws a bid using the system auction contract. Call the existing `withdraw_bid` entry point from the system auction contract. Using this method, you do not need to build any contracts, reducing costs and complexity.
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address <HOST:PORT> \
 --secret-key <PATH> \
 --chain-name <CHAIN_NAME> \
@@ -51,7 +51,7 @@ Calling the `withdraw_bid` entry point on the auction contract has a fixed cost 
 This example command uses the Casper Testnet to withdraw 5 CSPR from the bid:
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.75.254:7777 \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name casper-test \
@@ -65,7 +65,7 @@ sudo -u casper casper-client put-deploy \
 Below is the same command with the optional purse set to a different purse where the amount will be returned. **Adjust all the values to your use case.**
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.75.254:7777 \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name casper-test \
@@ -81,7 +81,7 @@ sudo -u casper casper-client put-deploy \
 There is a second way to withdraw a bid, using the compiled Wasm `withdraw_bid.wasm`. The process is the same as bonding but uses a different contract.
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address <HOST:PORT> \
 --secret-key <PATH> \
 --chain-name <CHAIN_NAME> \
@@ -115,7 +115,7 @@ This method is more expensive than calling the `withdraw_bid` entrypoint in the 
 Here is an example request to unbond stake using the `withdraw_bid.wasm`. The payment amount specified is 4 CSPR. You must modify the payment and other values in the deploy based on the network's [chainspec.toml](../../concepts/glossary/C.md#chainspec).
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.75.254:7777 \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name casper-test \

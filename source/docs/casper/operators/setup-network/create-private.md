@@ -345,7 +345,7 @@ All payment amounts in these examples must be adjusted based on the network [cha
 
 ```sh
 casper-client \
-  put-deploy \
+  put-txn \
   -n $NODE_ADDR \
   --chain-name $CHAIN_NAME \
   --secret-key alice/secret_key.pem \
@@ -366,7 +366,7 @@ The following command disables Alice's account. In this case, executing deploys 
 
 ```sh
 casper-client \
-  put-deploy \
+  put-txn \
   -n $NODE_ADDR \
   --chain-name $CHAIN_NAME \
   --secret-key admin/secret_key.pem \
@@ -383,7 +383,7 @@ The following command enables Alice's account. In this case, executing deploys w
 
 ```sh
 casper-client \
-  put-deploy \
+  put-txn \
   -n $NODE_ADDR \
   --chain-name $CHAIN_NAME \
   --secret-key admin/secret_key.pem \
@@ -401,7 +401,7 @@ The following command enables a contract using its hash.
 
 ```sh
 casper-client \
-  put-deploy \
+  put-txn \
   -n $NODE_ADDR \
   --chain-name $CHAIN_NAME \
   --secret-key admin/secret_key.pem \
@@ -419,7 +419,7 @@ The following command disables a contract using its hash. Executing this contrac
 
 ```sh
 casper-client \
-  put-deploy \
+  put-txn \
   -n $NODE_ADDR \
   --chain-name $CHAIN_NAME \
   --secret-key admin/secret_key.pem \

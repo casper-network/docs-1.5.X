@@ -73,7 +73,7 @@ We recommend testing the following steps on the official Testnet before performi
 This method calls the existing `activate_bid` entry point from the system auction contract. Using this method, you do not need to build any contracts, reducing costs and complexity.
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address <HOST:PORT> \
 --secret-key <PATH> \
 --chain-name <CHAIN_NAME> \
@@ -111,7 +111,7 @@ Calling the `activate_bid` entry point on the auction contract has a fixed cost 
 This example uses the Casper Testnet to reactivate a bid:
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.75.254:7777  \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name casper-test \
@@ -129,7 +129,7 @@ The second method to rejoin the network is to reactivate your bid using the `act
 
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address <HOST:PORT> \
 --secret-key <PATH> \
 --chain-name <CHAIN_NAME> \
@@ -161,7 +161,7 @@ As described above, this method is much more expensive than calling the `activat
 Here is an example that reactivates a bid using the `activate_bid.wasm`. You must modify the payment and other values in the deploy based on your environment and the network's [chainspec.toml](../../concepts/glossary/C.md#chainspec). For example, if you use the `activate_bid.wasm` on a network with node version [1.4.9](https://github.com/casper-network/casper-node/blob/release-1.4.9/resources/production/chainspec.toml), you will require a balance of at least 5 CSPR for this contract. 
 
 ```bash
-sudo -u casper casper-client put-deploy \
+sudo -u casper casper-client put-txn \
 --node-address http://65.21.75.254:7777  \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name casper-test \
