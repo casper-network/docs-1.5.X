@@ -134,7 +134,7 @@ In the case where there is a reference to stored on-chain Wasm (smart contracts)
 
 ## Unforgeable Reference (URef) {#uref-head}
 
-This key type is used for storing any value except `Account`. Additionally, `URef`s used in Wasm carry permission information to prevent unauthorized usage of the value stored under the key. The runtime tracks this permission information. This means that if malicious Wasm attempts to produce a `URef` with permissions that the Wasm does not have, the Wasm has attempted to "forge" the unforgeable reference, and the runtime will raise a forged `URef` error. Permissions for a `URef` can be given across contract calls, allowing data stored under a `URef` to be shared in a controlled way. The 32-byte identifier representing the key is generated randomly by the runtime (see [Execution Semantics](#execution-semantics-head) for more information). The serialization for `Access Rights` that define the permissions for `URefs` is detailed in the [CLValues](../serialization-standard.md) section.
+This key type is used for storing any value except `Account`. Additionally, `URef`s used in Wasm carry permission information to prevent unauthorized usage of the value stored under the key. The runtime tracks this permission information. This means that if malicious Wasm attempts to produce a `URef` with permissions that the Wasm does not have, the Wasm has attempted to "forge" the unforgeable reference, and the runtime will raise a forged `URef` error. Permissions for a `URef` can be given across contract calls, allowing data stored under a `URef` to be shared in a controlled way. The 32-byte identifier representing the key is generated randomly by the runtime (see [Execution Semantics](#execution-semantics-head) for more information). The serialization for `Access Rights` that define the permissions for `URefs` is detailed in the [CLValues](../serialization/primitives.md#clvalue) section.
 
 
 ### Permissions for `URef`s {#uref-permissions}
@@ -152,7 +152,7 @@ The ability to pass `URef`s between contexts via `call_contract` / `ret`, allows
 
 ### `URef`s and Purses
 
-Purses represent a unique type of `URef` used for accounting measures within a Casper network. `URef`s exist as a top-level entity, meaning that individual entities do not own ‘URef’s. As described above, entities possess certain `Access Rights`, allowing them to interact with the given `URef`. While an account entity will possess an associated `URef` representing their main purse, this `URef` exists as a [`Unit`](../serialization-standard.md#clvalue-unit) and corresponds to a *balance* key within the Casper *mint*. The individual balance key within the Casper mint is the account entity's purse, with transfers authorized solely through the associated `URef` and the `Access Rights` granted to it.
+Purses represent a unique type of `URef` used for accounting measures within a Casper network. `URef`s exist as a top-level entity, meaning that individual entities do not own ‘URef’s. As described above, entities possess certain `Access Rights`, allowing them to interact with the given `URef`. While an account entity will possess an associated `URef` representing their main purse, this `URef` exists as a [`Unit`](../serialization/primitives.md#unit-clvalue-unit) and corresponds to a *balance* key within the Casper *mint*. The individual balance key within the Casper mint is the account entity's purse, with transfers authorized solely through the associated `URef` and the `Access Rights` granted to it.
 
 Through this logic, the Casper mint holds all motes on the network and transfers between balance keys at the behest of entities as required.
 
@@ -176,7 +176,7 @@ The `block_hash` is the `blake2b256` hash of the block header.
 
 #### Header {#header}
 
-The [block header](../serialization-standard.md#serialization-standard-block) contains the following fields:
+The [block header](../serialization/structures.md#block-header) contains the following fields:
 
 * `parent_hash`
 
@@ -226,7 +226,7 @@ The block body contains an **ordered** list of transaction hashes. All transacti
 
 The block body also contains the public key of the validator that proposed the block.
 
-Refer to the [Serialization Standard](../serialization-standard.md) for additional information on how blocks and transactions are serialized.
+Refer to the [Serialization Standard](../serialization/index.md) for additional information on how blocks and transactions are serialized.
 
 ## Tokens {#tokens-head}
 

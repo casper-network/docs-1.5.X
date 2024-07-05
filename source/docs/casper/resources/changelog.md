@@ -8,7 +8,7 @@ The following are changes introduced alongside release of the Condor network upg
 
 [Understanding Key Types](../concepts/key-types.md) - Additional Key Types and document restructuring.
 
-[Serialization Standard](../concepts/serialization-standard.md) - Serialization information for new types.
+[Serialization Standard](../concepts/serialization/index.md) - Serialization information for new types.
 
 [Smart Contracts](../concepts/smart-contracts.md) - Information on the new factory pattern feature for smart contracts.
 

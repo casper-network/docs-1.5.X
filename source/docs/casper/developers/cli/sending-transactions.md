@@ -388,6 +388,6 @@ If your test configuration matches your production [chainspec](../../concepts/gl
 
 Please be aware that sending a deploy always requires payment. This is true regardless of the validity of included Wasm.
 
-If the deploy failure occurs after session execution begins, the penalty payment of 2.5 CSPR is included in the gas costs of the [failed execution](../../concepts/serialization-standard.md#executionresult-executionresult).
+If the deploy failure occurs after session execution begins, the penalty payment of 2.5 CSPR is included in the gas costs of the [failed execution](../../concepts/serialization/types.md#executionresultv1).
 
 However, if the failure occurs prior to session execution, the penalty payment will not appear within the gas cost of the deploy. Instead, the system automatically deducts the 2.5 CSPR from the sending account's main purse.

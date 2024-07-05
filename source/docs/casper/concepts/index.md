@@ -22,7 +22,7 @@ This section of the documentation covers the core concepts underpinning the Casp
 | [Transactions and the Transaction Lifecycle](./transactions-and-transaction-lifecycle.md) | Transactions are a concept fundamental to the Casper blockchain. Learn about transactions, what they are for, how to create and send them | 
 | [Smart Contracts](./smart-contracts.md) | Learn how to develop smart contracts on Casper | 
 | [Dictionaries](./dictionaries.md) | Learn about dictionaries, which are a primary construct for storing and retrieving data on the Casper platform | 
-| [Serialization](./serialization-standard.md) | Learn about serializing data types and the Casper Serialization Standard | 
+| [Serialization](./serialization/index.md) | Learn about serializing data types and the Casper Serialization Standard | 
 | [Design](./design/index.md) | The high-level design of a Casper network | 
 | [Economics](./economics/index.md) | Learn about the Casper on-chain economics | 
 | [Glossary](./glossary/index.md) | A compendium of all the terms used in Casper, in alphabetical order |
