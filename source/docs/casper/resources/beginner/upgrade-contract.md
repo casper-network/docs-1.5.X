@@ -17,9 +17,9 @@ Here is a video walkthrough of this tutorial.
 
 ## Prerequisites {#prerequisites}
 
--   The [ContractPackageHash](https://docs.rs/casper-types/latest/casper_types/contracts/struct.ContractPackageHash.html) referencing the [ContractPackage](https://docs.rs/casper-types/latest/casper_types/struct.ContractPackage.html) where an unlocked contract is stored in global state.
--   You should be familiar with [writing smart contracts](/writing-contracts), [on-chain contracts](../../developers/cli/sending-deploys.md), and [calling contracts](../../developers/cli/calling-contracts.md) on a Casper network.
--   You have installed [A Counter on the Testnet](/counter-testnet/) that you will upgrade as part of this tutorial.
+- The [ContractPackageHash](https://docs.rs/casper-types/latest/casper_types/contracts/struct.ContractPackageHash.html) referencing the [ContractPackage](https://docs.rs/casper-types/latest/casper_types/struct.ContractPackage.html) where an unlocked contract is stored in global state.
+- You should be familiar with [writing smart contracts](/writing-contracts), [on-chain contracts](../../developers/cli/sending-transactions.md), and [calling contracts](../../developers/cli/calling-contracts.md) on a Casper network.
+- You have installed [A Counter on the Testnet](/counter-testnet/) that you will upgrade as part of this tutorial.
 
 :::note
 
