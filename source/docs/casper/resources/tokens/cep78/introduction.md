@@ -87,7 +87,7 @@ folder within the project folder.
 
 ### Upgrading to Version 1.1.1 
 
-Upgrade to v1.1.1 using a [Standard NamedKey Convention](https://github.com/casper-ecosystem/cep-78-enhanced-nft/blob/dev/tutorials/standard-migration-tutorial.md) or a [Custom NamedKey Convention](https://github.com/casper-ecosystem/cep-78-enhanced-nft/blob/dev/docs/tutorials/custom-migration-tutorial.md).
+Upgrade to v1.1.1 using a [Standard NamedKey Convention](https://github.com/casper-ecosystem/cep-78-enhanced-nft/blob/dev/docs/tutorials/standard-migration-tutorial.md) or a [Custom NamedKey Convention](https://github.com/casper-ecosystem/cep-78-enhanced-nft/blob/dev/docs/tutorials/custom-migration-tutorial.md).
 
 ## Installing and Interacting with the Contract using the Rust Casper Client
 
