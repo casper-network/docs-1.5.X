@@ -8,6 +8,12 @@ Casper networks support configurable fee, refund, and pricing strategies. The Ma
 
 Instead of paying for gas to execute transactions, the `no_fee` chainspec configuration instructs the network to place a balance hold on the paying purse without transferring tokens from the purse: `fee_handling = { type = 'no_fee'}`. The portion of a purse balance that is locked is not available to transfer or spend until it is released; it is marked with a timestamp equal to the block time. In the "no fee" mode, the available balance of a purse equals its actual total balance minus all non-expired balance holds on that purse. The configurable `gas_hold_interval` determines how long a balance hold remains in effect. The on-chain logic calculates the correct values for total balance and available balance. The [query_balance_details](../../developers/json-rpc/json-rpc-informational.md#query_balance_details) RPC endpoint provides details on available balances and hold records.
 
+:::note
+
+A processing hold is not the same as a gas (or balance) hold. The processing hold is a temporary hold that prevents double spend. For example, if you want to do a transfer, you also need to cover the cost of the transfer.
+
+:::
+
 ## Chainspec Configurations
 
 The following chainspec configurations manage this feature:
@@ -19,17 +25,9 @@ The following chainspec configurations manage this feature:
 - `gas_hold_balance_handling - Defines how gas holds affect available balance calculations. Valid options are 'accrued' (the sum of the full value of all non-expired holds) and 'amortized' (the sum of each hold is amortized over the time remaining until expiry).
 -   `gas_hold_interval` - Defines how long gas holds last.
 
-## Computational and Storage Costs
+### Mainnet Condor Configurations
 
-Despite the introduction of fee elimination, the network continues to track computational cost based on opcodes as defined in the chainspec, thus retaining the [gas pricing mechanism](./gas-concepts.md). Opcodes enable Casper nodes to agree on the computational cost of transactions, commonly known as gas. This mechanism is a solution to the halting problem, and it abstracts the computational cost in a way that is deterministically consistent across multiple machines in a distributed network.
-
-Storage costs are also tracked and calculated using gas. Data written to global state is recorded forever and has a cost; therefore, the network charges for the Wasm that stores data in global state.
-
-This feature complements the dynamic gas pricing model introduced and configured to scale gas costs based on network utilization.
-
-## Mainnet Condor Configurations
-
-Here are the fee elimination settings for Mainnet with the Condor release:
+These are the fee elimination settings for the Condor release on Mainnet:
 <!--TODO check and update these settings after the launch or link to the chainspec file directly.-->
 
 ```toml
@@ -85,3 +83,11 @@ gas_hold_balance_handling = { type = 'accrued' }
 # for 24 hours starting from the block_time when the hold was placed.
 gas_hold_interval = '24 hours'
 ```
+
+## Computational and Storage Costs
+
+Despite the introduction of fee elimination, the network continues to track computational cost based on opcodes as defined in the chainspec, thus retaining the [gas pricing mechanism](./gas-concepts.md). Opcodes enable Casper nodes to agree on the computational cost of transactions, commonly known as gas. This mechanism is a solution to the halting problem, and it abstracts the computational cost in a way that is deterministically consistent across multiple machines in a distributed network.
+
+Storage costs are also tracked and calculated using gas. Data written to global state is recorded forever and has a cost; therefore, the network charges for the Wasm that stores data in global state.
+
+This feature complements the [dynamic gas pricing](./dynamic-gas-pricing.md) model introduced and configured to scale gas costs based on network utilization.
