@@ -53,6 +53,7 @@ module.exports = {
                 "concepts/economics/consensus",
                 "concepts/economics/runtime",
                 "concepts/economics/gas-concepts",
+                "concepts/economics/dynamic-gas-pricing",
                 "concepts/economics/fee-elimination",
                 {
                     type: "category",
