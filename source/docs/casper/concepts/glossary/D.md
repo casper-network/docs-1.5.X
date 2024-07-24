@@ -33,3 +33,7 @@ Review the [deploy data structure](../serialization-standard.md#deploy) and the 
 A `Dictionary` is a storage data structure on a Casper network. Dictionaries represent a more efficient and scalable form of data storage when compared to [`NamedKeys`](./N.md#namedkeys).
 
 More information can be found in the [Reading and Writing to Dictionaries](../dictionaries.md) document.
+
+## Dynamic gas pricing {#dynamic-gas-pricing}
+
+Dynamic gas pricing acts as a supply and demand-based check on the cost of network usage. If usage is low, the price multiple drifts down over time, incentivizing casual usage. If usage is high, the price multiple climbs up, incentivizing prioritized usage. Find more details [here](../economics/dynamic-gas-pricing.md).
