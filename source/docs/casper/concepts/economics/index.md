@@ -45,8 +45,18 @@ _Validators_ again play a vital role in this layer since protocol operation incl
 _Users_ execute session and contract code using the platform's computational resources
 
 ### Incentives (runtime layer) {#incentives-runtime-layer}
-<!--TODO explain the fee elimination model as a default, and therefore gas/balance holds will need to be discussed, again, probably, in a separate PR-->
-Gas/balance holds ensure that the users compensate validators for performing their computations.
+
+The Casper node software can be configured to support various fee, refund, and cost-handling strategies. The Condor release on Mainnet has enabled a [fee elimination](./fee-elimination.md) model by default, setting the `no_fee`,`no_refund`, and `fixed` pricing configurations in the network's chainspec.
+
+The `no_fee` mode means the token is put on hold instead of being taken from the payer. The hold interval is configured in the chainspec. The hold release mechanism is based on the "accrued" or "amortized" settings in the chainspec. Accrued holds are released after a certain amount of time has passed. Amortized holds are released using a linear schedule over a specified period.
+
+The `no_refund` mode means no refund is handled when fees are eliminated.
+
+Fixed pricing means the gas costs are determined using a cost table, and transactions are put in the appropriate lanes for execution. You can find more details about lanes [here](./runtime.md#lanes-lanes).
+
+When fees are eliminated, the block proposer receives validator credits instead of transaction fees. These credits contribute to the validator's total weight, determining their chances of winning a slot in the next era. Validators get rewards for proposing a block and creating and publishing finality signatures. In essence, gas/balance holds ensure that the network still compensates validators for their computations.
+
+The fee elimination model is different than the refund model introduced on Mainnet with release 1.5.6 and has replaced the refund behavior. Since all these behaviors are configurable, [private networks](../../operators/setup-network/create-private.md) can set their fee, refund, and pricing strategies.
 
 ## Ecosystem {#ecosystem}
 

@@ -80,4 +80,4 @@ We also offer several tools to run AWS instances of Casper nodes.
 In addition to the default [command-line Rust client](../developers/prerequisites.md#the-casper-command-line-client), the Casper community is building [other clients](/sdk) in JavaScript, Java, Golang, Python, C#, and other languages. 
 
 ## No Gas Fees {#no-gas-fees}
-Casper seeks to eliminate volatility and improve developer and enterprise experiences by eliminating transaction fees <!--TODO add link-->. This feature seeks to promote active and diverse network behaviour and we are researching innovative pricing models that will favor dApp developers as the ecosystem grows.
+Casper seeks to eliminate volatility and improve developer and enterprise experiences by [eliminating transaction fees](../concepts/economics/fee-elimination.md) on Mainnet. This feature seeks to promote active and diverse network behavior and we are researching innovative pricing models that will favor dApp developers as the ecosystem grows.

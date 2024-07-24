@@ -10,7 +10,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Gas is a conceptual measure of resources used when executing transactions on the blockchain. Cost is the amount of gas consumed during the processing cycles that execute a transaction on the network. It is directly correlated with the amount of computer processing a validator needs to provide in order to execute a transaction.
 
-Gas fees are consumed on the network irrespective of whether your transaction was successful or not. Even when a transaction fails, you have to pay the transaction fee because your deploy consumed resources and space on the block as the validator attempted to execute it on your behalf. Depending on how the network was configured, the transaction fee may or may not be refunded, or a hold may placed on the paying purse. <!--TODO add a link to fee elimination-->
+Gas fees are consumed on the network irrespective of whether your transaction was successful or not. Even when a transaction fails, you have to pay the transaction fee because your deploy consumed resources and space on the block as the validator attempted to execute it on your behalf. Depending on how the network was configured, the transaction fee may or may not be refunded, or a hold may placed on the paying purse. See [fee elimination](./fee-elimination.md) for more details.
 
 ## How is cost determined?
 

@@ -78,7 +78,7 @@ fee_handling = { type = "accumulate" }
 administrators = ["ADMIN_PUBLIC_KEY"]
 ```
 
-The Casper Mainnet has different refund and fee handling configurations explained in more detail here. <!--TODO add link-->
+The Casper Mainnet has different refund and fee handling configurations explained in more detail [here](../../concepts/economics/fee-elimination.md).
 
 ```toml
 [core]

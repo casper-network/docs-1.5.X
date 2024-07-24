@@ -1411,11 +1411,9 @@ We recommend installing your contracts in a test environment, making sure the co
 
 :::note
 
-Casper's "Condor" release introduces a new payment system that that includes the concept of fee elimination. More information can be found here.
+Casper's "Condor" release introduces a new payment system that includes the concept of [fee elimination](../../concepts/economics/fee-elimination.md).
 
 :::
-
-<!--TODO Include a link to fee elimination docs when available.-->
 
 If your test configuration matches your production [chainspec](../../concepts/glossary/C.md#chainspec), you can check the transaction status and roughly see how much it would cost. You can estimate the costs in this way and then add a small buffer to be sure. Refer to the [runtime economics](../../concepts/economics/runtime.md#gas-allocation) section for more details about gas usage and fees.
 

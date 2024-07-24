@@ -40,7 +40,7 @@ A smart contract platform provides the required blockchain environment for the c
 
 ## Staker {#staker}
 
-A person that deposits tokens in the [proof-of-stake](./P.md#proof-of-stake) contract. A staker is either a [validator](./V.md#validator) or a [delegator](./D.md#delegator). Stakers take on the slashing risk in exchange for rewards. Stakers will deposit their [tokens](./T.md#token) by sending a bonding request in the form of a transaction (deployment) to the system. If a validator is [slashed](#slashing), the staker will lose their tokens.
+A staker is either a [validator](./V.md#validator) or a [delegator](./D.md#delegator). Stakers take on the slashing risk in exchange for rewards. Stakers will deposit their [tokens](./T.md#token) by sending a bonding request in the form of a transaction (deployment) to the system. If a validator is [slashed](#slashing), the staker will lose their tokens.
 
 ## Staking {#staking}
 

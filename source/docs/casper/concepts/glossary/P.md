@@ -42,10 +42,6 @@ Proof-of-Stake (PoS) is a mechanism by which a cryptocurrency blockchain network
 
 A mechanism used in Bitcoin and Etherium for incentivizing participation and securing the system. In these protocols, a participant's voting power is proportional to the amount of computational power possessed.
 
-## Proof-of-Stake contract {#proof-of-stake-contract}
-
-The Proof-of-Stake (PoS) contract holds on to transaction fees for the time while the state transition is happening (contracts are being executed). The PoS contract remits the transaction fees to the block proposer.
-
 ## Proposer {#proposer}
 The proposer is a selected validator by a Casper network to propose the next block. A validator becomes a proposer by proposing a block to be added to the chain and receiving the appropriate reward. The proposing process assures that new blocks will be added to the blockchain.
 
