@@ -42,7 +42,7 @@ You will need the following information to use the `put-deploy` command:
 
 * The **secret key** of the account sending the `Deploy`. For this example, we are using node-1 as the sender. The secret key file can be found at *casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem*. In our example put-deploy, this will appear as `--secret-key /casper/casper-node/utils/nctl/assets/net-1/nodes/node-1/keys/secret_key.pem`. If your Deploy is more complex and requires multiple accounts, NCTL also establishes multiple users for testing.
 
-* The **payment amount** in motes, which should be sufficient to avoid an 'Out of Gas' error. The payment amount will appear in our example put-deploy as `--payment-amount 2500000000`. **NCTL tests are not an accurate representation of potential gas costs on a live network. Please see our [note about gas prices](../../developers/cli/sending-transactions.md#a-note-about-gas-price).**
+* The **payment amount** in motes, which should be sufficient to avoid an 'Out of Gas' error. The payment amount will appear in our example put-deploy as `--payment-amount 2500000000`. **NCTL tests are not an accurate representation of potential gas costs on a live network. Please read about [gas cost for transactions](../../developers/cli/sending-transactions.md#gas-cost-for-transactions).**
 
 * The **path** to your `Deploy` that you wish to send to the NCTL network. This will appear in our example put-deploy as `--session-path <PATH>` and will require you to define the path to your specific `Deploy` Wasm.
 

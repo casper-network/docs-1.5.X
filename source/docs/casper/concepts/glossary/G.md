@@ -12,7 +12,7 @@ Gas is a conceptual measure of resources used when executing transactions on the
 
 ## Gas cost {#gas-cost}
 
-Gas cost is the amount of gas consumed during the processing cycles that execute a transaction on the network. It is directly correlated with the amount of computer processing a validator needs to provide in order to execute a transaction.
+Gas cost is the amount of gas consumed during the processing cycles that execute a transaction on the network. It is directly correlated with the amount of computer processing a validator needs to provide to execute a transaction.
 
 ## Gas price {#gas-price}
 

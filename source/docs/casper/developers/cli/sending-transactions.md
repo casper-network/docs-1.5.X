@@ -2,6 +2,8 @@
 title: Sending Transactions
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # Sending Transactions using the Casper Client
 
 To install smart contracts on the blockchain, you can send your Wasm to the network via a [Transaction](../../concepts/glossary/T.md#transaction-transaction). To do this, you will need to meet a few prerequisites:
@@ -1331,7 +1333,7 @@ If the Transaction succeeded, the `get-txn` command would return a JSON object w
 
 We want to draw your attention to a few properties in the example output:
 
-- Execution consumed 371736413663 motes, which is less than our `gas price tolerance` of 1000000000000. See the [note about gas price](#a-note-about-gas-price)
+- Execution consumed 371736413663 motes, which is less than our `gas price tolerance` of 1000000000000. Read about [gas cost for transactions](#gas-cost-for-transactions)
 - The contract returned no errors. If you see an "Out of gas error", you did not specify a high enough value in the `--gas-price-tolerance` arg
 - The time-to-live was 30 minutes
 
@@ -1403,7 +1405,7 @@ To sign a Transaction with multiple keys, create the Transaction with the `make-
 
 For a step-by-step workflow, visit the [Two-Party Multi-Signature Transaction](../cli/transfers/multisig-deploy-transfer.md) guide. This workflow describes how a trivial two-party multi-signature scheme for signing and sending transactions can be enforced for an account on a Casper network.
 
-## A Note about Gas Price {#a-note-about-gas-price}
+## Gas Cost for Transactions {#gas-cost-for-transactions}
 
 A common question frequently arises: "How do I know what the payment amount (gas cost) should be?"
 
@@ -1417,8 +1419,36 @@ Casper's "Condor" release introduces a new payment system that includes the conc
 
 If your test configuration matches your production [chainspec](../../concepts/glossary/C.md#chainspec), you can check the transaction status and roughly see how much it would cost. You can estimate the costs in this way and then add a small buffer to be sure. Refer to the [runtime economics](../../concepts/economics/runtime.md#gas-allocation) section for more details about gas usage and fees.
 
-Please be aware that sending a transaction always requires payment. This is true regardless of the validity of included Wasm.
+Please be aware that sending a transaction always requires payment. This is true regardless of the validity of included Wasm. Depending on how the network was configured, the transaction payment may or may not be refunded, or a hold may placed on the paying purse. See [fee elimination](../../concepts/economics/fee-elimination.md) for more details.
 
 If the transaction failure occurs after session execution begins, the penalty payment of 2.5 CSPR is included in the gas costs of the [failed execution](../../concepts/serialization-standard.md#executionresult-executionresult).
 
-However, if the failure occurs prior to session execution, the penalty payment will not appear within the gas cost of the transaction. Instead, the system automatically deducts the 2.5 CSPR from the sending account's main purse.
+However, if the failure occurs prior to session execution, the penalty payment will not appear in the transaction's gas cost. Depending on the network configuration, the system will deduct the processing fee from the sending account's main purse or place a processing hold on the purse.
+
+## Common Errors Related to Payments
+
+### Out of gas error
+
+You might encounter an "Out of gas error" when the gas payment you supplied for the transaction was insufficient to cover the actual cost of computation for the transaction. The amount of gas required for a transaction is determined by how much code is executed on the blockchain and also the storage utilized.
+
+Here is an [example](https://cspr.live/deploy/afeb43036c41e667af8bc34782c48a66cf4da3818defe9f761291fa515cc38b9) of a transaction that resulted in an "Out of gas error" on the Mainnet.
+
+**Figure 1**: In the Deploys tab of an account on [cspr.live](https://cspr.live/), a red exclamation mark is shown. By moving the cursor over it, the tooltip displays an "Out of gas error".
+
+<img src={useBaseUrl("/image/gas-concepts/error-deploys.png")} width="550" alt="Out of gas error" />
+
+**Figure 2**: Click the specific deploy to see more details such as the deploy hash, cost, and the status as an 'Out of gas error'. This indicates that the transaction did not have sufficient payment to cover the gas required for it to complete successfully.
+
+<img src={useBaseUrl("/image/gas-concepts/error-account.png")} width="550" alt="Gas error in account" />
+
+**Figure 3**: Click the **Show raw data** button, to see more details about the deploy. Towards the end of the raw data, you can see the error message.
+
+<img src={useBaseUrl("/image/gas-concepts/error-raw.png")} width="550" alt="Gas error in raw data" />
+
+### Gas limit error
+
+You may sometimes see an error such as "payment: 2.5, cost: 2.5, Error::GasLimit". This message seems to say that the transaction cost is 2.5 CSPR and you paid 2.5 CSPR, yet the transaction resulted in an error.
+
+This error message tries to communicate that execution stopped at 2.5 CSPR, and the transaction did not run to completion. In other words, the computation resulted in an error because there were insufficient funds for the transaction to run to completion. It would have cost more than 2.5 CSPR to complete execution, but since you only supplied a payment of 2.5 CSPR worth of computation, the network stopped execution and charged that much, resulting in a failed transaction. The execution engine does not know how much it would have cost if allowed to run to completion because it did not allow the transaction to finish since it would have run over its gas limit.
+
+In summary, when a transaction hits its gas limit (the payment amount), execution stops.
