@@ -4,7 +4,7 @@ title: Dynamic Gas Pricing
 
 # Dynamic Gas Pricing on Mainnet
 
-The Condor release introduced a configurable capability to calculate dynamic gas prices based on block vacancy (in other words, block consumption). The network chainspec configures the `vacancy`, as shown below, which refers to this feature. This capability prevents malicious actors from filling the blocks with useless transactions and ensures network integrity.
+The Condor release introduced a configurable capability to calculate dynamic gas prices based on block vacancy (or consumption). The network chainspec configures the `vacancy`, as shown below, which refers to this feature. This capability prevents malicious actors from filling the blocks with useless transactions and ensures network integrity.
 
 When dynamic gas pricing is enabled, a calculation runs at the end of each era to average block usage within that era. This calculation determines the gas price the network will use for the next era. If overall consumption rises above a threshold, the gas price increases by 1. If consumption falls below a threshold, the gas price decreases by 1. The gas price remains the same if overall consumption remains within those thresholds. The gas price will not go up or down by more than 1 in a given era and will not go above the maximum or below the minimum threshold.
 
@@ -52,7 +52,7 @@ min_gas_price = 1
 
 ## Fixed Transaction Costs vs. Dynamic Gas Prices
 
-The current gas price and the slot’s maximum gas cost determine how much CSPR gets locked up for a transaction. Thus, the transaction price is predictable and fixed but has a dynamic component in that it’s pegged to the gas price. The system is designed this way to protect the network, adjusting the gas price as needed. You can find more information about the `pricing_handling = { type = 'fixed' }` setting [here](./fee-elimination.md).
+The current gas price and the slot’s maximum gas cost determine how much CSPR gets locked up for a transaction. Thus, the transaction price is predictable and fixed but has a dynamic component in that it’s pegged to the gas price. The system is designed this way to protect the network, adjusting the gas price as needed. Read more about lanes and gas cost [here](./runtime.md#lanes-and-gas-costs-lanes). Also, the `pricing_handling = { type = 'fixed' }` setting is described [here](./fee-elimination.md).
 
 ## Gas Tolerance
 

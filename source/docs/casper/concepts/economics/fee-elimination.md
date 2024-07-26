@@ -16,7 +16,7 @@ A processing hold is not the same as a gas (or balance) hold. The processing hol
 
 ## Chainspec Configurations
 
-The following chainspec configurations manage this feature:
+The following [chainspec configurations](../../operators/setup-network/chain-spec.md) manage this feature:
 
 -   `fee_handling` - Defines how fees are handled. To enable the "no fee" mode, set it to `{ type = 'no_fee'}`.
 -   `refund_handling` Defines how refunds of the unused portion of payment amounts are calculated and handled. For this setting to work with the "no fee" mode, set it to `{ type = 'no_refund'}`. If no fees are transferred from the paying purse, no refunds need to be paid out.
@@ -86,7 +86,7 @@ gas_hold_interval = '24 hours'
 
 ## Computational and Storage Costs
 
-Despite the introduction of fee elimination, the network continues to track computational cost based on opcodes as defined in the chainspec, thus retaining the [gas pricing mechanism](./gas-concepts.md). Opcodes enable Casper nodes to agree on the computational cost of transactions, commonly known as gas. This mechanism is a solution to the halting problem, and it abstracts the computational cost in a way that is deterministically consistent across multiple machines in a distributed network.
+Despite the introduction of fee elimination, the network continues to track [computational cost](../design/casper-design.md#measuring-computational-work-execution-semantics-gas) based on opcodes as defined in the chainspec, thus retaining the [gas pricing mechanism](./gas-concepts.md). Opcodes enable Casper nodes to agree on the computational cost of transactions, commonly known as gas. This mechanism is a solution to the halting problem in a distributed network, and it abstracts the computational cost in a way that is deterministically consistent across multiple machines.
 
 Storage costs are also tracked and calculated using gas. Data written to global state is recorded forever and has a cost; therefore, the network charges for the Wasm that stores data in global state.
 
