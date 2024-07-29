@@ -10,7 +10,7 @@ When dynamic gas pricing is enabled, a calculation runs at the end of each era t
 
 The gas price is recorded in the block header and is easily discoverable for current and historical purposes. The current gas price is a multiplier that determines the actual gas cost. For instance, an operation with a base cost of 1 CSPR would cost 1 CSPR if the current gas price is 1 but would cost 2 CSPR if the current gas price is 2. As blocks become congested, the amount of CSPR required to obtain a slot for executing transactions will increase by a multiple. The following configuration settings control this behavior:
 
-- `upper_threshold` - The threshold to decrease gas 
+- `upper_threshold` - The threshold to decrease gas price
 - `lower_threshold` - The threshold to increase gas price
 - `max_gas_price` - The maximum gas price
 - `min_gas_price` - The minimum gas price
