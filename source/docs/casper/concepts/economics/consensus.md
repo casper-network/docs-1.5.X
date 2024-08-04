@@ -31,7 +31,7 @@ The correct operation of the consensus protocol requires the platform's economic
 
 Safety may be incentivized through slashing for equivocation. This feature is currently disabled but may be reactivated in the future.
 
-The network incentivizes participation by issuing [rewards](../design/rewards.md) to validators for proposing blocks and creating and publishing finality signatures. Delegators also receive rewards by [staking](./staking/concepts.md) with a validator. All rewards are added directly to the corresponding bids and delegations.
+The network incentivizes participation by issuing [rewards](../design/rewards.md) to validators for proposing blocks and creating and publishing finality signatures. Delegators also receive rewards by [staking](./staking.md) with a validator. All rewards are added directly to the corresponding bids and delegations.
 
 ### Validator Participation {#participation}
 
