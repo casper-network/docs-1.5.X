@@ -46,7 +46,7 @@ casper-client put-txn withdraw-bid
 ```json
 
 casper-client put-txn add-bid
-/// The [delegation rate](../concepts/economics/staking.md#delegation-rate-delegation-rate) for delegators staking on to this validator.
+/// The [delegation rate](../concepts/economics/staking.md#delegation-rate) for delegators staking on to this validator.
   --delegation-rate <INTEGER>
 /// The public key of the bidder.
   --public-key <FORMATTED STRING or PATH>

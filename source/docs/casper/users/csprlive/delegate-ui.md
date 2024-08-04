@@ -11,7 +11,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This tutorial covers how to delegate Casper tokens to a validator on the network.
 
-Casper and other Proof-of-Stake protocols allow token holders to earn rewards and participate in the protocol through a mechanism called **delegation** or **staking**. We will use these terms interchangeably in this guide. See the [Staking Key Concepts](/staking) page for more details about the differences.
+Casper and other Proof-of-Stake protocols allow token holders to earn rewards and participate in the protocol through a mechanism called **delegation** or **staking**. We will use these terms interchangeably in this guide. See the [Staking Key Concepts](../../concepts/economics/staking.md) page for more details about the differences.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ Casper and other Proof-of-Stake protocols allow token holders to earn rewards an
 2. You need to [fund the account's main purse](../funding-from-exchanges.md) to delegate tokens.
 3. Connect to a block explorer to set up the delegation. This guide uses [cspr.live](https://cspr.live/) and the Casper Wallet.
 4. [Review your account](#account-review) before starting the process.
-5. Review the current [delegation fees](/staking#delegation-fees) and ensure you have extra CSPR in your account's main purse apart from the amount you are delegating. Otherwise, the delegation might fail.
+5. Review the current [delegation cost](../delegating.md#delegation-cost) and ensure you have extra CSPR in your account's main purse apart from the amount you are delegating. Otherwise, the delegation might fail.
 
 ### Reviewing your Account {#account-review}
 
@@ -82,7 +82,7 @@ The following instructions will take you through the delegation process, startin
 
 The delegation initiates as soon as the corresponding deploy is signed. You can review the details and status of the deploy by clicking the **Deploy Details** highlighted above. 
 
-Remember to [Monitor your Stake](/staking/#monitoring-rewards). Staking rewards are delivered to your account's main purse after each era, which is currently set to 2 hours. Note that it may take up to 2 eras (4 hours) for the first reward to appear after delegation. The rewards are automatically added to your current stake on the corresponding validator. You may view them under the _Rewards_ tab on your account page on <https://cspr.live/>.
+Remember to [Monitor your Stake](../../users/delegating.md#monitoring-rewards). Staking rewards are delivered to your account's main purse after each era, which is currently set to 2 hours. Note that it may take up to 2 eras (4 hours) for the first reward to appear after delegation. The rewards are automatically added to your current stake on the corresponding validator. You may view them under the _Rewards_ tab on your account page on <https://cspr.live/>.
 
 If you want to undelegate your tokens, you can do so at any time. See the [Undelegation Guide](./undelegate-ui.md) for details.
 
