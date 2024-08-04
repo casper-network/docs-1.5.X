@@ -20,7 +20,7 @@ When you delegate, the system automatically charges some gas to set up related d
 
 For example, the chainspec file in release 2.0.0 contains the following information. Notice the delegation cost specified with `delegate`.
 
-```rust
+```toml
 [system_costs.auction_costs]
 ...
 delegate = 2_500_000_000
@@ -31,6 +31,19 @@ undelegate = 2_500_000_000
 Delegation fees may change over time, so it is essential to stay current. To do so, select the latest release in [Github](https://github.com/casper-network/casper-node) and navigate to the `resources/production/chainspec.toml` file.
 
 For further questions, please join the [Discord channel](https://discord.com/invite/casperblockchain).
+
+## Delegation Limits
+
+The chainspec specifies delegation limits, such as the minimum and maximum amount allowed to be delegated. Also, each validator can have a maximum number of delegators.
+
+```toml
+# Minimum allowed delegation amount in motes
+minimum_delegation_amount = 500_000_000_000
+# Maximum allowed delegation amount in motes
+maximum_delegation_amount = 1_000_000_000_000_000_000
+# The maximum amount of delegators per validator.
+max_delegators_per_validator = 1200
+```
 
 ## Selecting a Node for Delegating {#selecting-a-node-for-delegating}
 
