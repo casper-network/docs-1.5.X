@@ -49,22 +49,7 @@ module.exports = {
                 type: "doc",
                 id: "concepts/economics/index",
             },
-            items: [
-                "concepts/economics/consensus",
-                "concepts/economics/runtime",
-                "concepts/economics/gas-concepts",
-                {
-                    type: "category",
-                    label: "Staking",
-                    collapsible: true,
-                    collapsed: true,
-                    link: {
-                        type: "doc",
-                        id: "concepts/economics/staking/concepts",
-                    },
-                    items: ["concepts/economics/staking/staking", "concepts/economics/staking/delegation"],
-                },
-            ],
+            items: ["concepts/economics/consensus", "concepts/economics/runtime", "concepts/economics/gas-concepts", "concepts/economics/staking"],
         },
         {
             type: "category",
@@ -428,6 +413,7 @@ module.exports = {
         "users/index",
         "users/block-explorer",
         "users/funding-from-exchanges",
+        "users/delegating",
         {
             type: "category",
             label: "Using CSPR.live",

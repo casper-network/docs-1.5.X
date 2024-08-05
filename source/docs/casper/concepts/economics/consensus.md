@@ -23,7 +23,7 @@ Each bid contains a delegation rate and activity status. The delegation rate can
 
 Delegation allows third parties to participate in consensus by adding weight to their preferred validators. Rewards received by validators are distributed in proportion to tokens bid and delegated. The current or prospective validator responsible for the bid receives a portion of the delegator rewards set by the delegation rate.
 
-Currently, delegation is unrestricted. Please visit [Delegation details](./staking/delegation.md) page to check more about delegation cost and related details.
+Currently, there are delegation limits in the chainspec. Visit the [Delegating Tokens](../../users/delegating.md) page for more details.
 
 ## Incentives {#incentives}
 
@@ -31,7 +31,7 @@ The correct operation of the consensus protocol requires the platform's economic
 
 Safety may be incentivized through slashing for equivocation. This feature is currently disabled but may be reactivated in the future.
 
-The network incentivizes participation by issuing [rewards](../design/rewards.md) to validators for proposing blocks and creating and publishing finality signatures. Delegators also receive rewards by [staking](./staking/concepts.md) with a validator. All rewards are added directly to the corresponding bids and delegations.
+The network incentivizes participation by issuing [rewards](../design/rewards.md) to validators for proposing blocks and creating and publishing finality signatures. Delegators also receive rewards by [staking](./staking.md) with a validator. All rewards are added directly to the corresponding bids and delegations.
 
 ### Validator Participation {#participation}
 
