@@ -77,7 +77,7 @@ sudo -u casper casper-client put-deploy \
 4. `payment-amount` - The payment for the Deploy in motes.
 5. `session-path` - The path to the compiled Wasm on your computer.
 
-The `change_bid_public_key.wasm` expects three arguments:
+The `change_bid_public_key.wasm` expects two arguments:
 
 7. `public key`: The hexadecimal public key associated with a validator bid to be changed. This key must match the secret key that signs the deploy.
 8. `new_public key`: The hexadecimal public key intended to replace the original key associated with the bid.
