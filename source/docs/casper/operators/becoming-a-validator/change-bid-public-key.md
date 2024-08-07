@@ -61,12 +61,15 @@ You may also change the public key associated with a bid via a transaction conta
 The following transaction is a template for sending a request:
 
 ```bash
-sudo -u casper casper-client put-txn \
+sudo -u casper casper-client put-txn session \
 --node-address http://<HOST:PORT> \
 --secret-key /etc/casper/validator_keys/secret_key.pem \
 --chain-name <CHAIN_NAME> \
---payment-amount <PAYMENT_AMOUNT> \
---session-path $HOME/casper-node/target/wasm32-unknown-unknown/release/change_bid_public_key.wasm \
+--category <INSTALL-UPGRADE|LARGE|MEDIUM|SMALL> \
+--pricing-mode fixed \
+--gas-price-tolerance <GAS_PRICE_TOLERANCE> \
+--transaction-path $HOME/casper-node/target/wasm32-unknown-unknown/release/change_bid_public_key.wasm \
+--session-entry-point call \
 --session-arg="public_key:public_key='<PUBLIC_KEY_HEX>'" \
 --session-arg="new_public_key:public_key='<PUBLIC_KEY_HEX>'"
 ```
@@ -74,8 +77,8 @@ sudo -u casper casper-client put-txn \
 1. `node-address` - An IP address of a peer on the network. The default port of nodes' JSON-RPC servers on Mainnet and Testnet is 7777.
 2. `secret-key` - The file name containing the secret key of the account paying for the Transaction.
 3. `chain-name` - The chain-name to the network where you wish to send the Transaction. For Mainnet, use _casper_. For Testnet, use _casper-test_.
-4. `payment-amount` - The payment for the Transaction in motes.
-5. `session-path` - The path to the compiled Wasm on your computer.
+4. `gas-price-tolerance` - Maximum payment for the Transaction in motes.
+5. `transaction-path` - The path to the compiled Wasm on your computer.
 
 The `change_bid_public_key.wasm` expects two arguments:
 
