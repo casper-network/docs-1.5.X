@@ -33,7 +33,7 @@ sudo -u casper casper-client put-txn \
 1. `node-address` - An IP address of a peer on the network. The default port of nodes' JSON-RPC servers on Mainnet and Testnet is 7777.
 2. `secret-key` - The file name containing the secret key of the account paying for the Transaction.
 3. `chain-name` - The chain-name to the network where you wish to send the Transaction. For Mainnet, use _casper_. For Testnet, use _casper-test_.
-4. `payment-amount` - The payment for the Transaction in motes. This entry point call needs 5 CSPR for node version [2.0.0](https://github.com/casper-network/casper-node/blob/release-2.0.0/resources/production/chainspec.toml).
+4. `payment-amount` - The payment for the Transaction in motes. This entry point call needs 5 CSPR.
 5. `session-hash` - Hex-encoded hash of the stored auction contract, which depends on the network you are using. For Casper's Mainnet and Testnet, the hashes are as follows:
 
 -   **Testnet**: `hash-93d923e336b20a4c4ca14d592b60e5bd3fe330775618290104f9beb326db7ae2`
