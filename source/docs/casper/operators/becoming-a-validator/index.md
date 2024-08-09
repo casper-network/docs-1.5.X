@@ -8,3 +8,4 @@ After [setting up a node](../setup/index.md), the operator can submit a bid to w
 |[Unbonding as a Validator](./unbonding.md) | The process to withdraw a bid and unbonding |
 |[Recovering from Validator Eviction](./recovering.md) | Steps a validator needs to take if it is evicted from the validator set |
 |[Inactive vs. Faulty Nodes](./inactive-vs-faulty.md) | The differences between inactive and faulty nodes |
+|[Change bid public key](./change-bid-public-key.md) | The differences between inactive and faulty nodes |
