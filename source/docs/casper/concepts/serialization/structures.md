@@ -12,7 +12,7 @@ An Account is a structure that represented a user on a legacy Casper network. Al
 
 -   [`associated_keys`](./types.md#associatedkey)
 
--   [`action_thresholds`](./types.md#action-thresholds)
+-   [`action_thresholds`](./types.md#account-action-thresholds)
 
 ## AddressableEntity {#addressable-entity}
 
@@ -30,7 +30,7 @@ An Addressable Entity is a structure that represents an entity on a Casper netwo
 
 - [`associated_keys`](./types.md#associatedkey)
 
-- [`action_thresholds`](./types.md#action-thresholds)
+- [`action_thresholds`](./types.md#entity-action-thresholds)
 
 - [`message_topics`](./types.md#message-topics)
 
