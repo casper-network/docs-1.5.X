@@ -8,4 +8,4 @@ The `Casper Binary Serialization Standard` uses a default `u8` byte tag to ident
 | ---- | ----------- |
 | [Primitives](./primitives.md) | Base-level types used to create more complex structures. |
 | [Structures](./structures.md) | Major structures used through Casper systems, as well as their included sub-types. |
-| [Types](./types.md) | Minor types not covered `Primitives` or `Structures` |
+| [Types](./types.md) | Minor types not covered `Primitives` or `Structures`. |

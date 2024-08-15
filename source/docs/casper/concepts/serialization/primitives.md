@@ -2,7 +2,7 @@
 
 ## `CLValue` {#clvalue}
 
-`CLValue` is used to describe data that is used by smart contracts. This could be as a local state variable, input argument, or return value. A `CLValue` consists of two parts: a `CLType` describing the type of the value and an array of bytes representing the data in our serialization format.
+`CLValue` describes data that is used by smart contracts. This could be a local state variable, input argument, or return value. A `CLValue` consists of two parts: a `CLType` describing the type of the value and an array of bytes representing the data in our serialization format.
 
 `CLType` is described by the following recursive data type:
 
@@ -36,7 +36,7 @@ enum CLType {
 }
 ```
 
-All data which can be assigned a (non-`Any`) `CLType` can be serialized according to the following rules (this defines the Casper serialization format):
+All data that can be assigned a (non-`Any`) `CLType` can be serialized according to the following rules, which define the Casper serialization format:
 
 ### Boolean {#clvalue-boolean}
 
@@ -50,7 +50,7 @@ Numeric values consisting of 64 bits or less serialize in the two's complement r
 -   E.g. `7u32` serializes as `0x07000000`
 -   E.g. `1024u32` serializes as `0x00040000`
 
--   Wider numeric values (i.e. `U128`, `U256`, `U512`) serialize as one byte given the length of the next number (in bytes), followed by the two's complement representation with little-endian byte order. The number of bytes should be chosen as small as possible to represent the given number. This is done to reduce the serialization size when small numbers are represented within a wide data type.
+-   Wider numeric values (i.e. `U128`, `U256`, `U512`) serialize as one byte given the length of the next number (in bytes), followed by the two's complement representation with little-endian byte order. The number of bytes should be chosen as small as possible to represent the given number. This reduces the serialization size when small numbers are represented within a wide data type.
 
 -   E.g. `U512::from(7)` serializes as `0x0107`
 -   E.g. `U512::from(1024)` serializes as `0x020004`
@@ -62,7 +62,7 @@ Unit serializes to an empty byte array.
 
 ### String {#clvalue-string}
 
-Strings serialize as a 32-bit integer representing the length in bytes (note: this might be different than the number of characters since special characters, such as emojis, take more than one byte), followed by the UTF-8 encoding of the characters in the string.
+Strings serialize as a 32-bit integer representing the length in bytes (that might be different than the number of characters since special characters, such as emojis, take more than one byte), followed by the UTF-8 encoding of the characters in the string.
 
 -   E.g. `"Hello, World!"` serializes as `0x0d00000048656c6c6f2c20576f726c6421`
 
@@ -75,7 +75,7 @@ Optional values serialize with a single byte tag, followed by the serialization 
 
 ### List {#clvalue-list}
 
-A list of values serializes as a 32-bit integer representing the number of elements in the list (note this differs from strings where it gives the number of _bytes_), followed by the concatenation of each serialized element.
+A list of values serializes as a 32-bit integer representing the number of elements in the list (differing from strings where it gives the number of _bytes_), followed by the concatenation of each serialized element.
 
 -   E.g. `List()` serializes as `0x00000000`
 -   E.g. `List(1u32, 2u32, 3u32)` serializes as `0x03000000010000000200000003000000`
@@ -105,7 +105,7 @@ A `Map` serializes as a list of key-value tuples. There must be a well-defined o
 
 ### URef {#clvalue-uref}
 
-`URef` values serialize as the concatenation of its address (which is a fixed-length list of `u8`) and a single byte tag representing the access rights. Access rights are converted as follows:
+`URef` values serialize as the concatenation of their address (a fixed-length list of `u8`) and a single byte tag representing access rights, which are converted as follows:
 
 | Access Rights    | Serialization |
 | ---------------- | ------------- |
@@ -137,7 +137,7 @@ If a passed URef contains `ADD` permissions, the entity receiving the URef will 
 
 ### Key {#clvalue-key}
 
-`Key` values serialize as a single byte tag representing the variant, followed by the serialization of the data that variant contains. For most variants, this is simply a fixed-length 32-byte array. The exception is `Key::URef`, which contains a `URef`; so its data serializes per the description above. The tags are as follows: `Key::Account` serializes as `0`, `Key::Hash` as `1`, `Key::URef` as `2`.
+`Key` values serialize as a single byte tag representing the variant, followed by the serialization of the data that the variant contains. For most variants, this is simply a fixed-length 32-byte array. The exception is `Key::URef`, which contains a `URef`; so its data serializes per the description above. The tags are as follows: `Key::Account` serializes as `0`, `Key::Hash` as `1`, `Key::URef` as `2`.
 
 ### CLType {#clvalue-cltype}
 
