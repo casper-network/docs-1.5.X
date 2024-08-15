@@ -59,11 +59,11 @@ Further, a block may consist of one of the following types:
 
 - `Version2`: A modern block.
 
-### Block hash {#block-hash}
+### BlockHash {#block-hash}
 
 The block hash is a `Digest` over the contents of the block Header. The `BlockHash` serializes as the byte representation of the hash itself.
 
-### Block Header {#block-header}
+### BlockHeader {#block-header}
 
 The header portion of a block, structurally, is defined as follows:
 
@@ -248,11 +248,11 @@ A deploy is a data structure containing a smart contract and the requester's sig
 -   `session`: The stored contract itself.
 -   `approvals`: A list of signatures.
 
-### Deploy-Hash {#deploy-hash}
+### DeployHash {#deploy-hash}
 
 The deploy hash is a digest over the contents of the deploy header. The deploy hash serializes as the byte representation of the hash itself.
 
-### Deploy-Header {#deploy-header}
+### DeployHeader {#deploy-header}
 
 -   `account`: A supported public key variant (currently either `Ed25519` or `Secp256k1`). An `Ed25519` key is serialized as a buffer of bytes, with the leading byte being `1` for `Ed25519`, with remainder of the buffer containing the byte representation of the signature. Correspondingly, a `Secp256k1` key is serialized as a buffer of bytes, with the leading byte being `2`.
 -   `timestamp`: A timestamp is a struct that is a unary tuple containing a `u64` value. This value is a count of the milliseconds since the UNIX epoch. Thus the value `1603994401469` serializes as `0xbd3a847575010000`

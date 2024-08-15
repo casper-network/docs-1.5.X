@@ -86,7 +86,7 @@ A tag describing the type of `BalanceHoldAddr`, serializing as a single [`u8` va
 
 ## BalanceResponse {#balance-response}
 
-`BalanceResponse` is a struct that provides the response to a balance query. It consists the following fields:
+`BalanceResponse` is a struct that provides the response to a balance query. It consists of the following fields:
 
 -   `total_balance`: The purse's total balance, not considering holds. It serializes as a [`U512` value](./primitives.md#clvalue-numeric).
 
@@ -501,11 +501,11 @@ A _key_ in [Global State](../design/casper-design.md#global-state-head) is one o
 
 The one exception to note here is the identifier for [`EraInfo`](#erainfo), which actually serializes as a [`u64`](./primitives.md#clvalue-numeric) value with an additional byte for the tag.
 
-### Account identity key {#global-state-account-key}
+### Account Identity Key {#global-state-account-key}
 
 This key type is used specifically for accounts in the global state. All accounts in the system must be stored under an account identity key, and no other types. The 32-byte identifier which represents this key is derived from the `blake2b256` hash of the public key used to create the associated account (see [Accounts](../design/casper-design.md#accounts-associated-keys-weights) for more information).
 
-### Hash key {#serialization-standard-hash-key}
+### Hash Key {#serialization-standard-hash-key}
 
 This key type is used for storing contracts immutably. Once a contract is written under a hash key, that contract can never change. The 32-byte identifier representing this key is derived from the `blake2b256` hash of the deploy hash (see [block-structure-head](../design/casper-design.md#block-structure-head) for more information) concatenated with a 4-byte sequential ID. The ID begins at zero for each deploy and increments by one each time a contract is stored. The purpose of this ID is to allow each contract stored in the same deploy to have a unique key.
 
@@ -515,7 +515,7 @@ This key type is used for storing contracts immutably. Once a contract is writte
 
 ### Transfer Key {#serialization-standard-transfer-key}
 
-This key type is used specifically for transfers in the global state. All transfers in the system must be stored under a transfer key and no other type. The 32-byte identifier which represents this key is derived from the `blake2b256` hash of the transfer address associated with the given transfer
+This key type is used specifically for transfers in the global state. All transfers in the system must be stored under a transfer key and no other type. The 32-byte identifier representing this key is derived from the `blake2b256` hash of the transfer address associated with the given transfer.
 
 ### DeployInfo Key {#serialization-standard-deploy-info-key}
 
@@ -557,7 +557,7 @@ Given the different variants for the over-arching `Key` data-type, each of the d
 | `ByteCode`   | 18               |
 | `Message`    | 19               |
 
--   `Account` serializes as a 32 byte long buffer containing the byte representation of the underlying `AccountHash`
+-   `Account` serializes as a 32 byte long buffer containing the byte representation of the underlying `AccountHash`.
 -   `Hash` serializes as a 32 byte long buffer containing the byte representation of the underlying `Hash` itself.
 -   `URef` is a tuple that contains the address of the URef and the access rights to that `URef`. The serialized representation of the `URef` is 33 bytes long. The first 32 bytes are the byte representation of the `URef` address, and the last byte contains the bits corresponding to the access rights of the `URef`. Refer to the [CLValue](./primitives.md#clvalue-clvalue) section of this chapter for details on how `AccessRights` are serialized.
 -   `Transfer` serializes as a 32 byte long buffer containing the byte representation of the hash of the transfer.
