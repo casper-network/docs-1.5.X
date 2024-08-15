@@ -1,5 +1,13 @@
 # Type Serialization
 
+## Account Action Thresholds {#account-action-thresholds}
+
+The minimum weight thresholds that have to be met when executing an action of a certain type. It serializes as three consecutive [`u8` values](./primitives.md#clvalue-numeric) as follows.
+
+-   `deployment`: The minimum weight threshold required to perform deployment actions as a `u8` value.
+
+-   `key_management`: The minimum weight threshold required to perform key management actions as a `u8` value.
+
 ## Account Config {#account-config}
 
 Configuration of an individual account in *accounts.toml*, containing the account's public key, main purse balance and validator config.
@@ -21,16 +29,6 @@ Identifier for possible ways to retrieve an Account. It can consist of any of th
 - [`PublicKey`](#publickey): The account's public key.
 
 - [`AccountHash`](#account-hash): The `blake2b` hash of the account's public key.
-
-## Action Thresholds {#action-thresholds}
-
-The minimum weight thresholds that have to be met when executing an action of a certain type. It serializes as three consecutive [`u8` values](./primitives.md#clvalue-numeric) as follows.
-
--   `deployment`: The minimum weight threshold required to perform deployment actions as a `u8` value.
-
--   `upgrade_management`: The minimum weight threshold required to perform upgrade management actions as a `u8` value.
-
--   `key_management`: The minimum weight threshold required to perform key management actions as a `u8` value.
 
 ## Activation Point {#activation-point}
 
@@ -284,6 +282,16 @@ Disabled contract versions, containing the following:
 
 A log of all transforms produced during execution, serialized as a vector of [transforms](#transformv2).
 
+## Entity Action Thresholds {#entity-action-thresholds}
+
+The minimum weight thresholds that have to be met when executing an action of a certain type. It serializes as three consecutive [`u8` values](./primitives.md#clvalue-numeric) as follows.
+
+-   `deployment`: The minimum weight threshold required to perform deployment actions as a `u8` value.
+
+-   `upgrade_management`: The minimum weight threshold required to perform upgrade management actions as a `u8` value.
+
+-   `key_management`: The minimum weight threshold required to perform key management actions as a `u8` value.
+
 ## EntityAddr {#entity-addr}
 
 The address for an `AddressableEntity`. It serializes as a `u8` [`EntityKindTag`](#entity-kind-tag) followed by the 32-byte buffer containing the bytes of the `hash_addr` as follows:
@@ -442,29 +450,29 @@ The result of a successful execution.
 
 ## ExecutionResultV2 {#executionresultv2}
 
-The result of a single deploy. It serializes as a `u8` tag indicating either `Failure` as a 0 or `Success` as a 1. This is followed by the appropriate structure below:
+The result of a single transaction. It serializes as a `u8` tag indicating either `Failure` as a 0 or `Success` as a 1. This is followed by the appropriate structure below:
 
 ### `Failure`
 
 The result of a failed execution.
 
--   `effects`: The [effect](#effects) of executing the deploy.
+-   `effects`: The [effect](#effects) of executing the transaction.
 
--   `transfers`: A record of transfers performed while executing the deploy, serialized as a [`List`](./primitives.md#clvalue-list).
+-   `transfers`: A record of transfers performed while executing the transaction, serialized as a [`List`](./primitives.md#clvalue-list).
 
--   `cost`: The cost of executing the deploy, serializes as a [`U512`](./primitives.md#clvalue-numeric) value.
+-   `cost`: The cost of executing the transaction, serializes as a [`U512`](./primitives.md#clvalue-numeric) value.
 
--   `error_message`: The error message associated with executing the deploy, serialized as a [`String`](./primitives.md#clvalue-string).
+-   `error_message`: The error message associated with executing the transaction, serialized as a [`String`](./primitives.md#clvalue-string).
 
 ### `Success`
 
 The result of a successful execution.
 
--   `effects`: The [effects](#effects) of executing the deploy.
+-   `effects`: The [effects](#effects) of executing the transaction.
 
--   `transfers`: A record of transfers performed while executing the deploy, serialized as a [`List`](./primitives.md#clvalue-list).
+-   `transfers`: A record of transfers performed while executing the transaction, serialized as a [`List`](./primitives.md#clvalue-list).
 
--   `cost`: The cost of executing the deploy, serializes as a [`U512`](./primitives.md#clvalue-numeric) value.
+-   `cost`: The cost of executing the transaction, serializes as a [`U512`](./primitives.md#clvalue-numeric) value.
 
 ## Gas {#gas}
 
