@@ -8,7 +8,7 @@ title: URef Access Rights
 
 An [Unforgeable Reference](/concepts/design/casper-design/#uref-head) or **URef** is a key type used for storage on a Casper network. They can store any value other than `Account` and exist as a top-level entity. As such, no individual entity may *own* a URef, they can only hold the necessary `AccessRights` to interact with a given URef.
 
-[`AccessRights`](/concepts/serialization-standard/#clvalue-uref) determine how an entity on a Casper network may interact with a URef. They appear as a single byte suffix after the concatenation of te URef's address. As an example, the following is an example of a URef with no associated access rights:
+[`AccessRights`](/concepts/serialization/primitives.md#clvalue-uref) determine how an entity on a Casper network may interact with a URef. They appear as a single byte suffix after the concatenation of te URef's address. As an example, the following is an example of a URef with no associated access rights:
 
 ```bash
 uref-974019c976b5f26412ce486158d2431967af35d91387dae8cbcd43c20fce6452-000

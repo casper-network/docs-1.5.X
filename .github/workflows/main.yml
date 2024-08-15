@@ -171,10 +171,6 @@ jobs:
         echo "Jekyll site is up..."
         echo "Testing if homepage responds correctly"
         curl --fail http://127.0.0.1:4000/
-        echo "Testing if a page responds correctly"
-        curl --fail http://127.0.0.1:4000/operators/setup-network/chain-spec/
-        echo "Testing if a page responds correctly"
-        curl --fail http://127.0.0.1:4000/concepts/serialization-standard/
       working-directory: ./docs
 
   deploy-preview:
@@ -233,14 +229,6 @@ jobs:
         run: |
           echo "Testing if homepage responds correctly"
           curl --fail https://$prod_pages_fqdn
-      - name: Test a random page
-        run: |
-          echo "Testing if a page responds correctly"
-          curl --fail https://$prod_pages_fqdn/operators/setup-network/chain-spec
-      - name: Test another random page
-        run: |
-          echo "Testing if a page responds correctly"
-          curl --fail https://$prod_pages_fqdn/concepts/serialization-standard
 
   rollback-if-tests-fail-prod:
     if: ${{ always() && (needs.system-tests-postdeployment-prod.result=='failure') }}

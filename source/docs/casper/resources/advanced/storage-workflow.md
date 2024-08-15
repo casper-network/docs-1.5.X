@@ -14,7 +14,7 @@ Essentially, there are three means of storage within the Casper ecosystem. These
 
 ### `runtime::put_key` / `runtime::get_key`
 
-Both the [`put_key`](https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.put_key.html) and [`get_key`](https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.get_key.html) functions refer to Casper `Key` types as outlined in both the [Understanding Hash Types](../../concepts/serialization-standard.md#serialization-standard-state-keys) and [Serialization Standard](../../concepts/serialization-standard.md#serialization-standard-state-keys). These keys are stored within a URef as a `Key` type.
+Both the [`put_key`](https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.put_key.html) and [`get_key`](https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.get_key.html) functions refer to Casper `Key` types as outlined in both the [Understanding Hash Types](../../concepts/key-types.md) and [Serialization Standard](../../concepts/serialization/types.md#keys-serialization-standard-state-keys). These keys are stored within a URef as a `Key` type.
 
 ### `storage::write` / `storage::read`
 
