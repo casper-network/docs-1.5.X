@@ -91,6 +91,7 @@ Both `BlockHeaderV1` and `BlockHeaderV2` serialize in the same way.
 
 -   `equivocators`: A vector of `PublicKey`.
 -   `rewards`: A Binary Tree Map of `PublicKey` and `u64`.
+-   `inactive_validators`: A vector of `PublicKey`.
 
 When serializing an EraReport, the buffer is first filled with the individual serialization of the PublicKey contained within the vector.
 
@@ -109,6 +110,7 @@ Note that `EraEndV1` is an optional field. Thus the above scheme only applies if
 - `inactive_validators`: A list of inactive validators for the era.
 - `next_era_validator_weights`: A map of validators and their weights for the era to follow.
 - `rewards`: A Binary Tree Map of `PublicKey` and `u64`.
+- `next_era_gas_price`: The next era's gas price as a `u8`.
 
 Note that `EraEndV2` is an optional field. Thus the above scheme only applies if there is an `EraEndV2`; if there is no era end, the field simply serializes to _0_.
 
@@ -262,43 +264,16 @@ The deploy hash is a digest over the contents of the deploy header. The deploy h
 -   `dependencies`: Dependencies is a vector of deploy hashes referencing deploys that must execute before the current deploy can be executed. It serializes as a buffer containing the individual serialization of each DeployHash within the Vector.
 -   `chain_name`: Chain name is a human-readable string describing the name of the chain as detailed in the chainspec. It is serialized as a String CLValue described below.
 
-### Payment & Session {#payment--session}
-
-Payment and Session are both defined as `ExecutableDeployItems`. More information on `ExecutableDeployItems` can be found [here](../../developers/writing-onchain-code/calling-contracts.md)
-
--   Module Bytes are serialized such that the first byte within the serialized buffer is `0` with the rest of the buffer containing the bytes present.
-
-    -   `ModuleBytes { module_bytes: "[72 bytes]", args: 434705a38470ec2b008bb693426f47f330802f3bd63588ee275e943407649d3bab1898897ab0400d7fa09fe02ab7b7e8ea443d28069ca557e206916515a7e21d15e5be5eb46235f5 }` will serialize to
-    -   `0x0048000000420481b0d5a665c8a7678398103d4333c684461a71e9ee2a13f6e859fb6cd419ed5f8876fc6c3e12dce4385acc777edf42dcf8d8d844bf6a704e5b2446750559911a4a328d649ddd48000000434705a38470ec2b008bb693426f47f330802f3bd63588ee275e943407649d3bab1898897ab0400d7fa09fe02ab7b7e8ea443d28069ca557e206916515a7e21d15e5be5eb46235f5`
-
--   StoredContractByHash serializes such that the first byte within the serialized buffer is 1u8. This is followed by the byte representation of the remaining fields.
-
-    -   `StoredContractByHash { hash: c4c411864f7b717c27839e56f6f1ebe5da3f35ec0043f437324325d65a22afa4, entry_point: "pclphXwfYmCmdITj8hnh", args: d8b59728274edd2334ea328b3292ed15eaf9134f9a00dce31a87d9050570fb0267a4002c85f3a8384d2502733b2e46f44981df85fed5e4854200bbca313e3bca8d888a84a76a1c5b1b3d236a12401a2999d3cad003c9b9d98c92ab1850 }`
-    -   `0x01c4c411864f7b717c27839e56f6f1ebe5da3f35ec0043f437324325d65a22afa41400000070636c7068587766596d436d6449546a38686e685d000000d8b59728274edd2334ea328b3292ed15eaf9134f9a00dce31a87d9050570fb0267a4002c85f3a8384d2502733b2e46f44981df85fed5e4854200bbca313e3bca8d888a84a76a1c5b1b3d236a12401a2999d3cad003c9b9d98c92ab1850`
-
--   StoredContractByName serializes such that the first byte within the serialized buffer is 2u8. This is followed by the individual byte representation of the remaining fields.
-
-    -   `StoredContractByName { name: "U5A74bSZH8abT8HqVaK9", entry_point: "gIetSxltnRDvMhWdxTqQ", args: 07beadc3da884faa17454a }`
-    -   `0x0214000000553541373462535a483861625438487156614b39140000006749657453786c746e5244764d685764785471510b00000007beadc3da884faa17454a`
-
--   StoredVersionedContractByHash serializes such that the first byte within the serialized buffer is 3u8. However, the field version within the enum serializes as an [Option](./primitives.md#option-clvalue-option) CLValue.
-
-    -   `StoredVersionedContractByHash { hash: b348fdd0d0b3f66468687df93141b5924f6bb957d5893c08b60d5a78d0b9a423, version: None, entry_point: "PsLz5c7JsqT8BK8ll0kF", args: 3d0d7f193f70740386cb78b383e2e30c4f976cf3fa834bafbda4ed9dbfeb52ce1777817e8ed8868cfac6462b7cd31028aa5a7a60066db35371a2f8 }`
-    -   `0x03b348fdd0d0b3f66468687df93141b5924f6bb957d5893c08b60d5a78d0b9a423001400000050734c7a3563374a73715438424b386c6c306b463b0000003d0d7f193f70740386cb78b383e2e30c4f976cf3fa834bafbda4ed9dbfeb52ce1777817e8ed8868cfac6462b7cd31028aa5a7a60066db35371a2f8`
-
--   StoredVersionedContractByName serializes such that the first byte within the serialized buffer is 4u8. The name and entry_point are serialized as a [String](./primitives.md#string-clvalue-string) CLValue, with the version field serializing as an [Option](./primitives.md#option-clvalue-option).
-
-    -   `StoredVersionedContractByName { name: "lWJWKdZUEudSakJzw1tn", version: Some(1632552656), entry_point: "S1cXRT3E1jyFlWBAIVQ8", args: 9975e6957ea6b07176c7d8471478fb28df9f02a61689ef58234b1a3cffaebf9f303e3ef60ae0d8 }`
-    -   `0x04140000006c574a574b645a5545756453616b4a7a7731746e01d0c64e61140000005331635852543345316a79466c57424149565138270000009975e6957ea6b07176c7d8471478fb28df9f02a61689ef58234b1a3cffaebf9f303e3ef60ae0d8`
-
--   Transfer serializes such that the first byte within the serialized buffer contains is 5u8, with the remaining bytes of the buffer containing the bytes contained within the args field of Transfer.
-
 ### Approval {#approval}
 
 Approval contains two fields:
 
 -   `signer`: The public key of the approvals signer. It serializes to the byte representation of the `PublicKey`. If the `PublicKey` is an `Ed25519` key, then the first byte within the serialized buffer is 1 followed by the bytes of the key itself; else, in the case of `Secp256k1`, the first byte is 2.
 -   `signature`: The approval signature, which serializes as the byte representation of the `Signature`. The first byte within the signature is 1 in the case of an `Ed25519` signature or 2 in the case of `Secp256k1`.
+
+### ApprovalsHash {#approvals-hash}
+
+The cryptographic hash of the bytesrepr-encoded set of approvals. It serializes as a [`digest`](./types.md#digest).
 
 ### DeployInfo {#deployinfo}
 
