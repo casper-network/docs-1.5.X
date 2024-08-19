@@ -24,7 +24,7 @@ casper-client verify-contract --verification-url-basepath <HOST:PORT> <TRANSACTI
 2. `<TRANSACTION-HASH>` - Unique transaction hash, which is part of the cryptographic security of blockchain technology. This is the output of the put-txn command if the transaction was a success.
 3. `<PATH>` - the path to the smart contracts source code. If this argument is omitted the the current working directory will be used.
 
-The prerequisites for the source code are the same as when deploying it on the blockchain:
+The prerequisites for the source code are the same as when installing it on the blockchain:
 
 * source code must be a Rust project as described in The Cargo Book
 
