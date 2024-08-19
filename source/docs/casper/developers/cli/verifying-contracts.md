@@ -30,6 +30,6 @@ The prerequisites for the source code are the same as when installing it on the 
 
 * There has to be either rust-toolchain or rust-toolchain.toml file and its contents must define a valid Rust toolchain, as described in The rustup book.
 
-* deployed contract (web-assembly binary) must be stripped off of debugging symbols prior submitting to Casper node. It can be achieved either by specifying strip = "symbols" in Rust project configuration, or by using wasm-strip from wabt package.
+* The installed contract (WebAssembly binary) must be stripped of debugging symbols before submitting it to the Casper node. This can be achieved by specifying strip = "symbols" in the Rust project configuration or using wasm-strip from the wabt package.
 
 If the verification result is a success then users will be able to see that information various websites integrated with the service f.e. on https://staging.casperecosystem.io/check-verification-status/ for Testnet transactions and https://casperecosystem.io/check-verification-status/ for Mainnet transactions. This will also give them the ability to browse through the source code of your smart contract which adds a new layer of transparency and trust.
