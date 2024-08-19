@@ -22,7 +22,7 @@ If you look inside the newly-created _my-project_ folder, you will find two crat
 
 ### Reproducibility
 
-Currently, [cargo](https://github.com/rust-lang/cargo/issues/8140) does not provide cross-platform reproducibility for binary files, including WebAssembly. The ability to compile a smart contract to exactly the same binary file is important, for example, when there is a need to verify the smart contract binary stored on the blockchain is exactly the same as the provided source code.
+Currently, [cargo](https://github.com/rust-lang/cargo/issues/8140) does not provide cross-platform reproducibility for binary files, including WebAssembly. The ability to compile a smart contract to the same binary file is important, for example, when verifying that the smart contract binary stored on the blockchain is the same as the provided source code.
 
 To work around the issue, `cargo casper` crate provides `rustc` wrapper, which can be enabled using `--wrapper` option.
 
