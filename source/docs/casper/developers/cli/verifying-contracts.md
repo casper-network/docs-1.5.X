@@ -14,7 +14,7 @@ This document describes actions needed for smart contract verification using the
 
 ## Verifying contracts using the Casper Client {#verifying-the-contract}
 
-You can use the Casper client's `verify-contract` command to have your contract verified. This command archives your contracts source code and sends it to the verification service. This service performs all the same operations on the provided source that a node does when deploying a smart contract on the blockchain. The resulted binary is then compared byte-by-byte against the contract fetched from the Casper blockchain based on the inputed transaction hash. If they match then the verification is a success.
+You can use the Casper client's `verify-contract` command to have your contract verified. This command archives your contract's source code and sends it to the verification service. This service performs all the same operations on the provided source that a node does when installing a smart contract on the blockchain. Based on the input transaction hash, the resulting binary is then compared byte-by-byte against the contract fetched from the Casper blockchain. If they match, then the verification is a success.
 
 ```bash
 casper-client verify-contract --verification-url-basepath <HOST:PORT> <TRANSACTION-HASH> <PATH>
