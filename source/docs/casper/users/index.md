@@ -8,6 +8,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 |----|-----------|
 |[Block Explorers](./block-explorer.md)| A guide to understanding block explorers |
 |[Funding Mainnet Accounts](./funding-from-exchanges.md)| Funding Mainnet accounts from an exchange |
+|[Delegating Tokens](./delegating.md)| Delegating tokens to a validator (a.k.a. staking with a validator) |
 
 ## Using CSPR.live
 

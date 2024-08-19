@@ -20,9 +20,11 @@ sudo -u casper casper-client put-deploy \
 --payment-amount <PAYMENT_AMOUNT_IN_MOTES> \
 --session-hash <SESSION_HASH> \
 --session-entry-point add_bid \
---session-arg="public_key:public_key='<PUBLIC_KEY_HEX>'" \
---session-arg="amount:u512='<BID_AMOUNT>'" \
---session-arg="delegation_rate:u8='<PERCENT_TO_KEEP_FROM_DELEGATORS>'"
+--session-arg "public_key:public_key='<PUBLIC_KEY_HEX>'" \
+--session-arg "amount:u512='<BID_AMOUNT>'" \
+--session-arg "delegation_rate:u8='<PERCENT_TO_KEEP_FROM_DELEGATORS>'"
+--session-arg "minimum_delegation_amount:u64='<MINIMUM_DELEGATION_AMOUNT>'"
+--session-arg "maximum_delegation_amount:u64='<MAXIMUM_DELEGATION_AMOUNT>'"
 ```
 
 1. `node-address` - An IP address of a peer on the network. The default port of nodes' JSON-RPC servers on Mainnet and Testnet is 7777
@@ -41,6 +43,8 @@ The `add_bid` entry point expects three arguments:
 7. `public key`: The hexadecimal public key of the account's purse submitting the bid. This key must match the secret key that signs the bid
 8. `amount`: The bidding amount
 9. `delegation_rate`: Percentage of the rewards that the node operator retains for their services
+10. `minimum_delegation_amount` (optional): Minimum allowed delegation amount in motes
+11. `maximum_delegation_amount` (optional): Maximum allowed delegation amount in motes
 
 The command will return a deploy hash, which is needed to verify the deploy's processing results.
 
@@ -64,7 +68,7 @@ sudo -u casper casper-client put-deploy \
 --session-entry-point add_bid \
 --session-arg "public_key:public_key='01c297d2931fec7e22b2fb1ae3ca5afdfacc2c82ba501e8ed158eecef82b4dcdee'" \
 --session-arg "amount:U512='$[10000 * 1000000000]'" \
---session-arg="delegation_rate:u8='10'"
+--session-arg "delegation_rate:u8='10'"
 ```
 
 Next, [check the status of the auction](#check-the-status-of-the-bid-in-the-auction) to see if you have won a validator slot.
@@ -82,9 +86,11 @@ sudo -u casper casper-client put-deploy \
 --chain-name <CHAIN_NAME> \
 --payment-amount <PAYMENT_AMOUNT> \
 --session-path $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm \
---session-arg="public_key:public_key='<PUBLIC_KEY_HEX>'" \
---session-arg="amount:u512='<BID-AMOUNT>'" \
---session-arg="delegation_rate:u8='<PERCENT_TO_KEEP_FROM_DELEGATORS>'"
+--session-arg "public_key:public_key='<PUBLIC_KEY_HEX>'" \
+--session-arg "amount:u512='<BID-AMOUNT>'" \
+--session-arg "delegation_rate:u8='<PERCENT_TO_KEEP_FROM_DELEGATORS>'"
+--session-arg "minimum_delegation_amount:u64='<MINIMUM_DELEGATION_AMOUNT>'"
+--session-arg "maximum_delegation_amount:u64='<MAXIMUM_DELEGATION_AMOUNT>'"
 ```
 
 1. `node-address` - An IP address of a peer on the network. The default port of nodes' JSON-RPC servers on Mainnet and Testnet is 7777
@@ -98,6 +104,8 @@ The `add_bid.wasm` expects three arguments:
 7. `public_key`: The hexadecimal public key of the account's purse submitting the bid. This key must match the secret key that signs the bid
 8. `amount`: The bidding amount
 9. `delegation_rate`: Percentage of the rewards that the node operator retains for their services
+10. `minimum_delegation_amount` (optional): Minimum allowed delegation amount in motes
+11. `maximum_delegation_amount` (optional): Maximum allowed delegation amount in motes
 
 The command will return a deploy hash, which is needed to verify the deploy's processing results.
 
@@ -120,7 +128,7 @@ sudo -u casper casper-client put-deploy \
 --session-path ~/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm \
 --session-arg "public_key:public_key='01c297d2931fec7e22b2fb1ae3ca5afdfacc2c82ba501e8ed158eecef82b4dcdee'" \
 --session-arg "amount:U512='$[10000 * 1000000000]'" \
---session-arg="delegation_rate:u8='10'"
+--session-arg "delegation_rate:u8='10'"
 ```
 
 Next, check the bid status to see if you have won a validator slot.

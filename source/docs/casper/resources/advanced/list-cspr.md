@@ -169,7 +169,7 @@ If you are not going to do a Testnet integration, then we suggest you create som
 
 ## Staking Integration for Exchanges
 
-Exchanges seeking to integrate CSPR staking mechanisms will need to understand the processes of delegation, undelegation and redelegation through deploys on a Casper network. The following outlines the use of the [JavaScript SDK](https://github.com/casper-ecosystem/casper-js-sdk/) to perform these actions, as well as parameters relating to staking. Further information about staking on a Casper network can be found [here](/staking/).
+Exchanges seeking to integrate CSPR staking mechanisms will need to understand the processes of delegation, undelegation and redelegation through deploys on a Casper network. The following outlines the use of the [JavaScript SDK](https://github.com/casper-ecosystem/casper-js-sdk/) to perform these actions, as well as parameters relating to staking. Further information about staking on a Casper network can be found [here](../../users/delegating.md).
 
 ### Deploy Structures and Parameters
 

@@ -6,7 +6,7 @@ The storage layer for the Casper blockchain is called *global state* and has the
 
 :::note
 
-Refer to [Keys and Permissions](./serialization-standard.md#serialization-standard-state-keys) for further information on keys.
+Refer to [Keys and Permissions](./serialization/types.md#serialization-standard-serialization-key) for further information on keys.
 
 :::
 

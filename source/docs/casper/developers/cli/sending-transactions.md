@@ -1421,7 +1421,7 @@ If your test configuration matches your production [chainspec](../../concepts/gl
 
 Please be aware that sending a transaction always requires payment. This is true regardless of the validity of included Wasm. Depending on how the network was configured, the transaction payment may or may not be refunded, or a hold may placed on the paying purse. See [fee elimination](../../concepts/economics/fee-elimination.md) for more details.
 
-If the transaction failure occurs after session execution begins, the penalty payment of 2.5 CSPR is included in the gas costs of the [failed execution](../../concepts/serialization-standard.md#executionresult-executionresult).
+If the transaction failure occurs after session execution begins, the penalty payment of 2.5 CSPR is included in the gas costs of the [failed execution](../../concepts/serialization/types.md#executionresultv2).
 
 However, if the failure occurs prior to session execution, the penalty payment will not appear in the transaction's gas cost. Depending on the network configuration, the system will deduct the processing fee from the sending account's main purse or place a processing hold on the purse.
 

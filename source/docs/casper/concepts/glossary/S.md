@@ -44,7 +44,7 @@ A staker is either a [validator](./V.md#validator) or a [delegator](./D.md#deleg
 
 ## Staking {#staking}
 
-A feature of Proof-of-Stake protocols that allows token holders to actively participate in the protocol, thus securing the network. The [Staking Guide](../economics/staking/staking.md) highlights the steps required to stake CSPR tokens on the Casper Mainnet.
+A feature of Proof-of-Stake protocols that allows token holders to actively participate in the protocol, thus securing the network. The [Staking Guide](../economics/staking.md) highlights the steps required to stake CSPR tokens on the Casper Mainnet.
 
 ## State root hash {#state-root-hash}
 
