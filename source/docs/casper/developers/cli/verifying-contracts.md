@@ -6,7 +6,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Verifying Smart Contracts
 
-This document describes actions needed for smart contract verification using [Casper CLI client](../prerequisites.md#install-casper-client).
+This document describes actions needed for smart contract verification using the [Casper CLI client](../prerequisites.md#install-casper-client).
 
 ## Prerequisites
 
