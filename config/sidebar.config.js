@@ -44,17 +44,7 @@ module.exports = {
                 "concepts/economics/gas-concepts",
                 "concepts/economics/dynamic-gas-pricing",
                 "concepts/economics/fee-elimination",
-                {
-                    type: "category",
-                    label: "Staking",
-                    collapsible: true,
-                    collapsed: true,
-                    link: {
-                        type: "doc",
-                        id: "concepts/economics/staking/concepts",
-                    },
-                    items: ["concepts/economics/staking/staking", "concepts/economics/staking/delegation"],
-                },
+                "concepts/economics/staking",
             ],
         },
         {
@@ -104,11 +94,7 @@ module.exports = {
                 type: "doc",
                 id: "concepts/serialization/index",
             },
-            items: [
-                "concepts/serialization/primitives",
-                "concepts/serialization/structures",
-                "concepts/serialization/types",
-            ],
+            items: ["concepts/serialization/primitives", "concepts/serialization/structures", "concepts/serialization/types"],
         },
         "concepts/intro-to-dapps",
         "concepts/addressable-entity",
