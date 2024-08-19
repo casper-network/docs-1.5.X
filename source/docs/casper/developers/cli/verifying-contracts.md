@@ -20,7 +20,7 @@ You can use the Casper client's `verify-contract` command to have your contract 
 casper-client verify-contract --verification-url-basepath <HOST:PORT> <TRANSACTION-HASH> <PATH>
 ```
 
-1. `verification-url-basepath` - the address of the verification service which will perform the operation, the current two options are: https://staging.codeverifier.casper.network for Testnet and https://codeverifier.casper.network for Mainnet.
+1. `verification-url-basepath` - The address of the verification service that will perform the operation; the current two options are https://staging.codeverifier.casper.network for Testnet and https://codeverifier.casper.network for Mainnet.
 2. `<TRANSACTION-HASH>` - Unique transaction hash, which is part of the cryptographic security of blockchain technology. This is the output of the put-txn command if the transaction was a success.
 3. `<PATH>` - the path to the smart contracts source code. If this argument is omitted the the current working directory will be used.
 
