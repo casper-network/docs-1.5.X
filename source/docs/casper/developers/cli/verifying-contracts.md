@@ -28,7 +28,7 @@ The prerequisites for the source code are the same as when installing it on the 
 
 * The source code must be a Rust project as described in The Cargo Book.
 
-* there has to be either rust-toolchain or rust-toolchain.toml file, and its contents must define a valid Rust toolchain, as described in The rustup book.
+* There has to be either rust-toolchain or rust-toolchain.toml file and its contents must define a valid Rust toolchain, as described in The rustup book.
 
 * deployed contract (web-assembly binary) must be stripped off of debugging symbols prior submitting to Casper node. It can be achieved either by specifying strip = "symbols" in Rust project configuration, or by using wasm-strip from wabt package.
 
