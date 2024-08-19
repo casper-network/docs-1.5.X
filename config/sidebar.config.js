@@ -38,7 +38,14 @@ module.exports = {
                 type: "doc",
                 id: "concepts/economics/index",
             },
-            items: ["concepts/economics/consensus", "concepts/economics/runtime", "concepts/economics/gas-concepts", "concepts/economics/staking"],
+            items: [
+                "concepts/economics/consensus",
+                "concepts/economics/runtime",
+                "concepts/economics/gas-concepts",
+                "concepts/economics/dynamic-gas-pricing",
+                "concepts/economics/fee-elimination",
+                "concepts/economics/staking",
+            ],
         },
         {
             type: "category",
@@ -87,11 +94,7 @@ module.exports = {
                 type: "doc",
                 id: "concepts/serialization/index",
             },
-            items: [
-                "concepts/serialization/primitives",
-                "concepts/serialization/structures",
-                "concepts/serialization/types",
-            ],
+            items: ["concepts/serialization/primitives", "concepts/serialization/structures", "concepts/serialization/types"],
         },
         "concepts/intro-to-dapps",
         "concepts/addressable-entity",

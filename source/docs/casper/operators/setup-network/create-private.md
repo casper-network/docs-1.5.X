@@ -77,6 +77,19 @@ refund_handling = { type = "refund", refund_ratio = [1, 1] }
 fee_handling = { type = "accumulate" }
 administrators = ["ADMIN_PUBLIC_KEY"]
 ```
+
+The Casper Mainnet has different refund and fee handling configurations explained in more detail [here](../../concepts/economics/fee-elimination.md).
+
+```toml
+[core]
+allow_unrestricted_transfers = true
+compute_rewards = true
+allow_auction_bids = true
+refund_handling = { type = 'no_refund' }
+fee_handling = { type = 'no_fee' }
+administrators = []
+```
+
 :::
 
 ### Refund handling configuration
@@ -89,15 +102,17 @@ A `refund_ratio` is specified as a proper fraction (the numerator must be lower 
 [core]
 refund_handling = { type = "refund", refund_ratio = [1, 1] }
 ```
+
+Another example: a refund variant with `refund_ratio` of [0, 100] means that 0% is given back to the user after deducting gas fees. In other words, if a user paid 2.5 CSPR and the gas fee is 1 CSPR, the user will not get the remaining 1.5 CSPR in return.
+
 After deducting the gas fee, the distribution of the remaining payment amount is handled based on the [fee_handling](./create-private.md#fee-handling-config) configuration.
 
-The default configuration for a public chain, including the Casper Mainet,  looks like this:
+Starting with the Condor release, a Casper private network can eliminate fees and, thus, not require refunds, similar to the Casper Mainnet:
 
 ```toml
-[core]
-refund_handling = { type = "refund", refund_ratio = [0, 100] }
+refund_handling = { type = 'no_refund' }
+fee_handling = { type = 'no_fee' }
 ```
-The refund variant with `refund_ratio` of [0, 100] means that 0% is given back to the user after deducting gas fees. In other words, if a user paid 2.5 CSPR and the gas fee is 1 CSPR, the user will not get the remaining 1.5 CSPR in return.
 
 ### Fee handling configuration
 This option defines how to distribute the fees after refunds are handled. While refund handling defines the amount we pay back after a transaction, fee handling defines the methods of fee distribution after a refund is performed.
@@ -110,7 +125,8 @@ Set up the configuration as below:
 fee_handling = { type = "pay_to_proposer" }
 ```
 
-The `fee_handling` configuration has three variations:
+The `fee_handling` configuration has four variations:
+- `no_fee`: Fees are eliminated. No refunds are necessary.
 - `pay_to_proposer`: The rest of the payment amount after deducing the gas fee from a refund is paid to the block's [proposer](../../concepts/glossary/P.md#proposer).
 - `burn`: The tokens paid are burned, and the total supply is reduced.
 - `accumulate`: The funds are transferred to a special accumulation purse. Here, the accumulation purse is owned by a handle payment system contract, and the amount is distributed among all the administrators defined at the end of a switch block. The fees are paid to the purse owned by the handle payment contract, and no tokens are transferred to the proposer when this configuration is enabled.

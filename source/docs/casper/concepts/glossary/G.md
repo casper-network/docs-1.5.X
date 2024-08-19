@@ -8,7 +8,15 @@
 
 ## Gas {#gas}
 
-Gas is the virtual currency for calculating the cost of transaction execution. The transaction cost is expressed as a given amount of gas consumed and can be seen intuitively as some cycles of the virtual processor that has to be used to run the computation defined as the transaction's code.
+Gas is a conceptual measure of resources used when executing transactions on the blockchain.
+
+## Gas cost {#gas-cost}
+
+Gas cost is the amount of gas consumed during the processing cycles that execute a transaction on the network. It is directly correlated with the amount of computer processing a validator needs to provide to execute a transaction.
+
+## Gas price {#gas-price}
+
+Multiplier applied to gas cost. See [dynamic gas pricing](../economics/dynamic-gas-pricing.md).
 
 ## Genesis {#genesis}
 
