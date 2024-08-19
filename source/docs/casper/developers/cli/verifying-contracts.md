@@ -26,7 +26,7 @@ casper-client verify-contract --verification-url-basepath <HOST:PORT> <TRANSACTI
 
 The prerequisites for the source code are the same as when installing it on the blockchain:
 
-* source code must be a Rust project as described in The Cargo Book
+* The source code must be a Rust project as described in The Cargo Book.
 
 * there has to be either rust-toolchain or rust-toolchain.toml file, and its contents must define a valid Rust toolchain, as described in The rustup book.
 
