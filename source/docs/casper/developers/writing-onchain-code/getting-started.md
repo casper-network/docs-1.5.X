@@ -20,6 +20,16 @@ cargo casper my-project
 
 If you look inside the newly-created _my-project_ folder, you will find two crates: `contract` and `tests`. This is a complete basic smart contract that saves a value, passed as an argument, on the blockchain. The `tests` crate provides a runtime environment of the Casper virtual machine, and a basic smart contract test.
 
+### Reproducibility
+
+Currently, [cargo](https://github.com/rust-lang/cargo/issues/8140) does not provide cross-platform reproducibility for binary files, including WebAssembly. The ability to compile a smart contract to the same binary file is important, for example, when verifying that the smart contract binary stored on the blockchain is the same as the provided source code.
+
+To work around the issue, `cargo casper` crate provides `rustc` wrapper, which can be enabled using `--wrapper` option.
+
+```bash
+cargo casper my_project --wrapper
+```
+
 ### Using the nightly toolchain
 
 Navigate to the `my-project` folder and open the `rust-toolchain` file. You will notice that the file's contents specify a nightly version of Rust. Here is an example:
@@ -46,7 +56,7 @@ To support smart contract development with Rust, the following crates are publis
 - [casper-engine-test-support](https://crates.io/crates/casper-engine-test-support) - a virtual machine against which you can test your smart contracts.
 - [casper-types](https://crates.io/crates/casper-types) - a library with types we use across the Rust ecosystem.
 
-A crate is a compilation unit that can be compiled into a binary or a library. 
+A crate is a compilation unit that can be compiled into a binary or a library.
 
 :::note
 
