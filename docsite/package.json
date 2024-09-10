@@ -1,0 +1,54 @@
+{
+  "name": "cspr-docs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "set-env:dev": "NODE_ENV=dev",
+    "set-env:tst": "NODE_ENV=tst",
+    "set-env:prod": "NODE_ENV=prod",
+    "docusaurus": "docusaurus",
+    "start": "yarn set-env:dev && docusaurus start",
+    "serve:dev": "yarn set-env:dev && docusaurus serve",
+    "serve:prod": "yarn set-env:prod && docusaurus serve",
+    "build:dev": "yarn set-env:dev && docusaurus build",
+    "build:prod": "yarn set-env:prod && docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "gh-pages": "npx gh-pages -d build",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "version-gen": "yarn docusaurus docs:version 1.5.6"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "dotenv": "^16.4.5",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.5.2",
+    "@docusaurus/types": "^3.5.2",
+    "gh-pages": "^6.1.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
+}

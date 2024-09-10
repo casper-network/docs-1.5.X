@@ -1,0 +1,4 @@
+condor:
+  label: 'Condor'
+  permalink: '/condor'
+  description: 'Blog posts related to the Condor upgrade'

@@ -1,0 +1,33 @@
+melpadden:
+  name: Mel Padden
+  page: true 
+  title: Head of Developer Relations for Casper Association
+  url: https://github.com/melpadden
+  image_url: https://github.com/melpadden.png
+  socials:
+    x: mel_casper
+  permalink: '/melpadden'
+
+sczembor:
+  name: Stanislaw Czembor
+  page: true 
+  title: Developer Advocate for Casper Association
+  url: https://github.com/sczembor
+  image_url: https://github.com/sczembor.png
+  permalink: '/sczembor'
+
+dylanireland:
+  name: Dylan Ireland
+  page: true 
+  title: Developer Advocate for Casper Association
+  url: https://github.com/dylanireland
+  image_url: https://github.com/dylanireland.png
+  permalink: '/dylanireland'
+
+alexanderlimonov:
+  name: Alexander Limonov
+  page: true 
+  title: Economist for Casper Labs
+  url: https://github.com/AlexanderLimonov
+  image_url: https://github.com/AlexanderLimonov.png
+  permalink: '/alexanderlimonov'

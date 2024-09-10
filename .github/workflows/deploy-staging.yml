@@ -1,0 +1,46 @@
+name: Build and Deploy - Staging
+
+env:
+    prod_pages_fqdn: ${{ vars.PROD_PAGES_FQDN }}
+    selected_node_version: 21.6
+    working_directory: ./build
+    base_url: "http://staging.docs.casper.network"
+    site_url: "http://staging.docs.casper.network"
+
+on:
+    workflow_call:
+
+jobs:
+    build:
+      uses: ./.github/workflows/build.yml
+      with:
+            environment: development
+            selected_node_version: 21.6
+            base_url: "http://staging.docs.casper.network"
+            site_url: "http://staging.docs.casper.network"
+
+    deploy-preview:
+        if: github.event_name == 'pull_request'
+        needs: [build]
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/download-artifact@master
+              with:
+                  name: gh-pages-depl-payload
+                  path: ./docs
+
+            - name: Deploy to Netlify
+              uses: nwtgck/actions-netlify@v2.1
+              with:
+                  publish-dir: "docs"
+                  production-deploy: false
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  deploy-message: 'Preview Deploy'
+                  enable-pull-request-comment: true
+                  enable-commit-comment: false
+                  enable-github-deployment: false
+              env:
+                  NETLIFY_AUTH_TOKEN: ${{ secrets.PREVIEW_NETLIFY_AUTH_TOKEN }}
+                  NETLIFY_SITE_ID: ${{ secrets.PREVIEW_NETLIFY_SITE_ID }}
+              timeout-minutes: 1

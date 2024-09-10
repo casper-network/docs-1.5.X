@@ -1,0 +1,30 @@
+name: Deploy Preview
+on:
+    workflow_call:
+        inputs:
+            working_directory:
+                required: true
+                type: string
+
+jobs:
+    deploy-preview:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/download-artifact@master
+          with:
+            name: gh-pages-depl-payload
+            path: ${{ inputs.working_directory }}
+        - name: Deploy to Netlify
+          uses: nwtgck/actions-netlify@v2.1
+          with:
+                publish-dir: ${{ inputs.working_directory }}
+                production-deploy: false
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                deploy-message: ${{ github.event.pull_request.title }}
+                enable-pull-request-comment: true
+                enable-commit-comment: false
+                enable-github-deployment: false
+          env:
+                NETLIFY_AUTH_TOKEN: ${{ secrets.PREVIEW_NETLIFY_AUTH_TOKEN }}
+                NETLIFY_SITE_ID: ${{ secrets.PREVIEW_NETLIFY_SITE_ID }}
+                timeout-minutes: 1

@@ -1,0 +1,58 @@
+name: system-tests-predeployment
+on:
+    workflow_call:
+        inputs:
+            working_directory:
+                required: true
+                type: string
+ 
+jobs: 
+    system-tests-predeployment:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: ruby/setup-ruby@v1
+              with:
+                ruby-version: 2.7
+                bundler-cache: true
+            - name: Install Jekyll
+              run: |
+                sudo gem install jekyll
+
+            - uses: actions/download-artifact@master
+              with:
+                name: gh-pages-depl-payload
+                path: ${{ inputs.working_directory }}
+            - name: Create Jekyll site
+              run: | 
+                jekyll new --skip-bundle --force .
+              working-directory: ${{ inputs.working_directory }}
+
+            - name: Edit GemFile
+              run: |
+                sed -i 's/^gem "jekyll", .*$/gem "github-pages", "~> 219", group: :jekyll_plugins/' Gemfile
+              working-directory:  ${{ inputs.working_directory }}
+
+            - name: Run bundle install
+              run: |
+                bundle install
+              working-directory: ${{ inputs.working_directory }}
+
+            - name: Edit baseurl in _config.yml
+              run: |
+                sed -i 's/^baseurl.*$/baseurl: "\/"/' _config.yml
+              working-directory: ${{ inputs.working_directory }}
+            - name: Run Jekyll site locally and test
+              run: |
+                echo "Serve Jekyll site"
+                bundle exec jekyll serve &
+                while ! nc -z 127.0.0.1 4000; do   
+                sleep 0.1
+                done
+                echo "Jekyll site is up..."
+                echo "Testing if homepage responds correctly"
+                curl --fail http://127.0.0.1:4000/
+                echo "Testing if a page responds correctly"
+                curl --fail http://127.0.0.1:4000/operators/setup-network/chain-spec/
+                echo "Testing if a page responds correctly"
+                curl --fail http://127.0.0.1:4000/concepts/serialization-standard/
+              working-directory: ${{ inputs.working_directory }}
