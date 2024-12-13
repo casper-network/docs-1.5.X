@@ -78,37 +78,47 @@ curl -s http://<node_address>:8888/status | jq
 
 ```json
 {
-  "api_version": "1.4.15",
-  "chainspec_name": "casper-test",
-  "starting_state_root_hash": "4c3856bd6a95b566301b9da61aaf84589a51ee2980f3cc7bbef78e7745386955",
   "peers": [
     {
-      "node_id": "tls:007e..e14b",
-      "address": "89.58.52.245:35000"
+      "node_id": "tls:0082..eba9",
+      "address": "65.21.231.40:35000"
     },
     {
-      "node_id": "tls:00eb..ac11",
-      "address": "65.109.17.120:35000"
+      "node_id": "tls:00e1..2a78",
+      "address": "65.109.34.108:52636"
     },
     ...
-    {
-      "node_id": "tls:ffc0..555b",
-      "address": "95.217.228.224:35000"
+     {
+      "node_id": "tls:fc90..6ae5",
+      "address": "135.181.48.112:35000"
     }
   ],
+"api_version": "1.5.8",
+  "build_version": "1.5.8",
+  "chainspec_name": "casper-test",
+  "starting_state_root_hash": "6204eb9060e42889796f1354f48d5f8a669e7c4ca104c3db00d12e5d42061126",
   "last_added_block_info": {
-    "hash": "7acd2f48b573704e96eab54322f7e91a0624252baca3583ad2aae38229fe1715",
-    "timestamp": "2023-05-10T09:20:10.752Z",
-    "era_id": 9085,
-    "height": 1711254,
-    "state_root_hash": "1ac74071c1e76937c372c8d2ae22ea036a77578aad03821ec98021fdc1c5d06b",
-    "creator": "0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca"
+    "hash": "2ae203e702bcb35b360ebd45f39765240b2f3462804223861b7bde4fbe08ae1f",
+    "timestamp": "2024-12-13T19:44:39.936Z",
+    "era_id": 16084,
+    "height": 4188106,
+    "state_root_hash": "4ec7a5e4b3c0f283ce75694d27870ee6f674092f9d072346ca58bbbab1726116",
+    "creator": "01c8be540a643e6c9df283dd2d2d6be67748f69a3c7bb6cf34471c899b8e858c9a"
   },
-  "our_public_signing_key": "0107cba5b4826a87ddbe0ba8cda8064881b75882f05094c1a5f95e957512a3450e",
-  "round_length": "32s 768ms",
+  "our_public_signing_key": "0153d98c835b493c76050735dc79e6702a17cd78ab69d5b0c3631e72f8f38bb095",
+  "round_length": "16s 384ms",
   "next_upgrade": null,
-  "build_version": "1.4.15-039d438f2-casper-mainnet",
-  "uptime": "5days 13h 46m 54s 520ms"
+  "uptime": "2months 1day 4h 38m 47s 84ms",
+  "reactor_state": "Validate",
+  "last_progress": "2024-10-12T21:47:05.432Z",
+  "available_block_range": {
+    "low": 3866524,
+    "high": 4188106
+  },
+  "block_sync": {
+    "historical": null,
+    "forward": null
+  }
 }
 ```
 
@@ -137,17 +147,17 @@ curl -s http://<node_address>:8888/status | jq -r '.api_version, .last_added_blo
 <summary>Sample response</summary>
 
 ```json
-"1.4.15"
+1.5.8
 {
-  "hash": "dca9959b21df52633f85cd373a8117fe8e89629dd2a0455781484a439f7d9f62",
-  "timestamp": "2023-05-10T09:26:43.968Z",
-  "era_id": 9085,
-  "height": 1711266,
-  "state_root_hash": "5f374529e747a06ec825e07a030df7b9d80d1f7ffac9156779b4466620721872",
-  "creator": "0107cba5b4826a87ddbe0ba8cda8064881b75882f05094c1a5f95e957512a3450e"
+  "hash": "60a4a390c0c10d3d18774ef762e8014f140abc6aad5683105bda56516476661c",
+  "timestamp": "2024-12-13T19:46:34.624Z",
+  "era_id": 16084,
+  "height": 4188113,
+  "state_root_hash": "42cc9318822fe7d1c8cd3c569a55e0dbe65a07a03af4d2cad62fbaa49a5ebfda",
+  "creator": "017d96b9a63abcb61c870a4f55187a0a7ac24096bdb5fc585c12a686a4d892009e"
 }
-"1.4.15-039d438f2-casper-mainnet"
-"5days 13h 53m 10s 763ms"
+1.5.8
+2months 1day 4h 40m 42s 81ms
 ```
 
 </details>
